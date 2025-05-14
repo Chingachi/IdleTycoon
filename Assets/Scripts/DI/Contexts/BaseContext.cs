@@ -18,6 +18,13 @@ namespace DI.Contexts
       }
     }
 
+    protected void UnbindInstallers()
+    {
+      foreach (BaseInstaller installer in _installers) {
+        installer.RemoveBindings();
+      }
+    }
+
 
     public DiContainer Container
     {

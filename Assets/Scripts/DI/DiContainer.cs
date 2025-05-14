@@ -10,6 +10,7 @@ namespace DI
     private readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
     private readonly Dictionary<Type, object> _caches = new Dictionary<Type, object>();
     private readonly HashSet<Type> _transients = new HashSet<Type>();
+
     private readonly Dictionary<Type, BindType> _binds = new Dictionary<Type, BindType>();
 
     private readonly Dictionary<BindType, Action<Type, object>> _binders;
@@ -27,7 +28,10 @@ namespace DI
           BindType.Cached, (type, instance) => AddToDictionary(type, instance, _caches)
         },
         {
-          BindType.Singleton, (type, instance) => AddToDictionary(type, instance, _singletons)
+          BindType.Singleton, (type, instance) =>
+          {
+            AddToDictionary(type, instance, _singletons);
+          }
         }
       };
 
@@ -87,11 +91,8 @@ namespace DI
       return result;
     }
 
-    public void Bind<T> (T instance, BindType bindType)
-      where T : class
+    public void BindTo<T> (T instance, Type type, BindType bindType)
     {
-      Type type = instance.GetType();
-
       AddBinding(type, bindType);
 
       if (_binders.TryGetValue(bindType, out Action<Type, object> binder)) {
@@ -99,7 +100,14 @@ namespace DI
       }
     }
 
-    public void Bind<T> (BindType bindType)
+    public void Bind<T> (T instance, BindType bindType)
+      where T : class
+    {
+      Type type = instance.GetType();
+      BindTo(instance, type, bindType);
+    }
+
+    public void CreateAndBind<T> (BindType bindType)
       where T : class
     {
       object instance = CreateInstance(typeof(T));

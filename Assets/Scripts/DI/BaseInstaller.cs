@@ -5,6 +5,8 @@ namespace DI
   {
     public abstract void InstallBindings();
 
+    public abstract void RemoveBindings();
+
     public void SetContainer (DiContainer container)
     {
       Container = container;
