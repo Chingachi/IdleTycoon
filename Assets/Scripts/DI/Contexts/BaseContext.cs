@@ -13,8 +13,8 @@ namespace DI.Contexts
     protected void BindInstallers()
     {
       foreach (BaseInstaller installer in _installers) {
-       installer.SetContainer(_container); 
-       installer.InstallBindings();
+        installer.SetContainer(_container);
+        installer.InstallBindings();
       }
     }
 

@@ -5,11 +5,11 @@ namespace DI
   {
     public abstract void InstallBindings();
 
-    private DiContainer Container { get; set; }
-
     public void SetContainer (DiContainer container)
     {
       Container = container;
     }
+
+    protected DiContainer Container { get; set; }
   }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-namespace DI.Contexts
+﻿namespace DI.Contexts
 {
   public class ProjectContext : BaseContext
   {

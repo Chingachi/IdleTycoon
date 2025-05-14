@@ -1,23 +1,24 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 namespace DI
 {
   public class DiContainer
   {
-    private Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
-    private Dictionary<Type, object> _caches = new Dictionary<Type, object>();
-    private HashSet<Type> _transients = new HashSet<Type>();
-    private Dictionary<Type, BindType> _binds = new Dictionary<Type, BindType>();
+    private readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
+    private readonly Dictionary<Type, object> _caches = new Dictionary<Type, object>();
+    private readonly HashSet<Type> _transients = new HashSet<Type>();
+    private readonly Dictionary<Type, BindType> _binds = new Dictionary<Type, BindType>();
 
-    private Dictionary<BindType, Action<Type, object>> _binders;
-    private Dictionary<BindType, Action<Type>> _unbinders;
-    private Dictionary<BindType, Func<Type, object>> _resolvers;
+    private readonly Dictionary<BindType, Action<Type, object>> _binders;
+    private readonly Dictionary<BindType, Action<Type>> _unbinders;
+    private readonly Dictionary<BindType, Func<Type, object>> _resolvers;
 
     public DiContainer()
     {
-      _binders = new Dictionary<BindType, Action<Type, object>>()
+      _binders = new Dictionary<BindType, Action<Type, object>>
       {
         {
           BindType.Transient, (type, instance) => _transients.Add(type)
@@ -30,7 +31,7 @@ namespace DI
         }
       };
 
-      _unbinders = new Dictionary<BindType, Action<Type>>()
+      _unbinders = new Dictionary<BindType, Action<Type>>
       {
         {
           BindType.Transient, type => _transients.Remove(type)
@@ -43,17 +44,17 @@ namespace DI
         }
       };
 
-      _resolvers = new Dictionary<BindType, Func<Type, object>>()
+      _resolvers = new Dictionary<BindType, Func<Type, object>>
       {
 
         {
-          BindType.Transient, Activator.CreateInstance
+          BindType.Transient, CreateInstance
         },
         {
-          BindType.Cached, type => _caches.TryGetValue(type, out var result) ? result : null
+          BindType.Cached, type => _caches.TryGetValue(type, out object result) ? result : null
         },
         {
-          BindType.Singleton, type => _singletons.TryGetValue(type, out var result) ? result : null
+          BindType.Singleton, type => _singletons.TryGetValue(type, out object result) ? result : null
         }
       };
     }
@@ -61,10 +62,23 @@ namespace DI
     public T Resolve<T>()
       where T : class
     {
-      var type = typeof(T);
-      var bindType = _binds[type];
+      Type type = typeof(T);
+      BindType bindType = _binds[type];
 
-      var result = (T)_resolvers[bindType](type);
+      T result = (T)_resolvers[bindType](type);
+
+      if (result == null) {
+        throw new Exception($"Resolver for {type.Name} was not found");
+      }
+
+      return result;
+    }
+
+    public object Resolve (Type type)
+    {
+      BindType bindType = _binds[type];
+
+      object result = _resolvers[bindType](type);
 
       if (result == null) {
         throw new Exception($"Resolver for {type.Name} was not found");
@@ -76,33 +90,60 @@ namespace DI
     public void Bind<T> (T instance, BindType bindType)
       where T : class
     {
-      var type = typeof(T);
+      Type type = instance.GetType();
 
       AddBinding(type, bindType);
 
-      if (_binders.TryGetValue(bindType, out var binder)) {
+      if (_binders.TryGetValue(bindType, out Action<Type, object> binder)) {
         binder.Invoke(type, instance);
       }
     }
 
+    public void Bind<T> (BindType bindType)
+      where T : class
+    {
+      object instance = CreateInstance(typeof(T));
+      Bind(instance, bindType);
+    }
 
 
     public void Unbind<T>()
       where T : class
     {
-      var type = typeof(T);
+      Type type = typeof(T);
 
       if (!_binds.ContainsKey(type)) {
         return;
       }
 
-      var bindType = _binds[type];
+      BindType bindType = _binds[type];
 
-      if (_unbinders.TryGetValue(bindType, out var unbinder)) {
+      if (_unbinders.TryGetValue(bindType, out Action<Type> unbinder)) {
         unbinder.Invoke(type);
       }
 
       _binds.Remove(type);
+    }
+
+    private object CreateInstance (Type type)
+    {
+      ConstructorInfo [] constructors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+
+      if (constructors.Length == 0) {
+        return Activator.CreateInstance(type);
+      }
+
+
+      ConstructorInfo constructor = constructors.OrderByDescending(c => c.GetParameters().Length).First();
+      ParameterInfo [] parameters = constructor.GetParameters();
+      object [] resolvedParams = new object[parameters.Length];
+
+      for (int i = 0; i < parameters.Length; i++) {
+        Type parameterType = parameters[i].ParameterType;
+        resolvedParams[i] = Resolve(parameterType);
+      }
+
+      return Activator.CreateInstance(type, resolvedParams);
     }
 
     private void AddToDictionary<T> (Type type, T instance, Dictionary<Type, object> dictionary)
