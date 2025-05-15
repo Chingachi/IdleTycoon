@@ -16,40 +16,40 @@ MonoBehaviour:
   - Name: House
     Type: 100
     Price: 500
-    Prefab: {fileID: 3283030447293352184, guid: eaa7c692fb9d5474b8e9c421d398a498, type: 3}
+    Prefab: {fileID: -1956058470996311498, guid: eaa7c692fb9d5474b8e9c421d398a498, type: 3}
   - Name: Comfortable house
     Type: 101
     Price: 1500
-    Prefab: {fileID: 6079393580511132963, guid: 5d4901dc0ac243545aae699af252555e, type: 3}
+    Prefab: {fileID: 4886220329510873486, guid: 5d4901dc0ac243545aae699af252555e, type: 3}
   - Name: Luxury house
     Type: 102
     Price: 4000
-    Prefab: {fileID: 2630909765280098422, guid: 1bd929fb09b1fbe4bb7020913cbc6b51, type: 3}
+    Prefab: {fileID: -2605168469097804307, guid: 1bd929fb09b1fbe4bb7020913cbc6b51, type: 3}
   - Name: Motel
     Type: 1
     Price: 2000
-    Prefab: {fileID: 4576087216426152509, guid: 5f43dd5690e469d4fa935c77a9dcc028, type: 3}
+    Prefab: {fileID: -5546370086535009605, guid: 5f43dd5690e469d4fa935c77a9dcc028, type: 3}
   - Name: Pizzeria
     Type: 2
     Price: 1000
-    Prefab: {fileID: 1287803109151964394, guid: a1b05943ecb77f24ea8f6feaa2d06ec2, type: 3}
+    Prefab: {fileID: -3953982310540314857, guid: a1b05943ecb77f24ea8f6feaa2d06ec2, type: 3}
   - Name: Gas Station
     Type: 3
     Price: 2500
-    Prefab: {fileID: 1275528675357709659, guid: 488152badeea9a0418acf602474df095, type: 3}
+    Prefab: {fileID: 1955427806959650533, guid: 488152badeea9a0418acf602474df095, type: 3}
   - Name: Gas station shop
     Type: 33
     Price: 1500
-    Prefab: {fileID: 8427129789734184352, guid: 379d23429c4da5844bea98027a9b338d, type: 3}
+    Prefab: {fileID: 3742886489311149435, guid: 379d23429c4da5844bea98027a9b338d, type: 3}
   - Name: Market
     Type: 5
     Price: 2000
-    Prefab: {fileID: 8088135526796106278, guid: 8702378c227d9ee45a5b4f594f4a62dd, type: 3}
+    Prefab: {fileID: -5281391811341369612, guid: 8702378c227d9ee45a5b4f594f4a62dd, type: 3}
   - Name: Bakery
     Type: 6
     Price: 3500
-    Prefab: {fileID: 5653151521263401692, guid: f05030334485c4240a1383d7bf388fb8, type: 3}
+    Prefab: {fileID: 8159385597538384353, guid: f05030334485c4240a1383d7bf388fb8, type: 3}
   - Name: Cinema
     Type: 7
     Price: 6000
-    Prefab: {fileID: 4624827711815750687, guid: 7a3ec7b4b9f458c4581bd407a56c1497, type: 3}
+    Prefab: {fileID: 1380914723233329709, guid: 7a3ec7b4b9f458c4581bd407a56c1497, type: 3}

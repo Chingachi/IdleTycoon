@@ -6,9 +6,8 @@ namespace Common
   {
     public event Action OnClick;
 
-    private void OnMouseDown()
+    protected virtual void OnMouseUpAsButton()
     {
-      Debug.Log($"Click: {gameObject.name}");
       OnClick?.Invoke();
     }
   }
