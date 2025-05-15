@@ -61,6 +61,8 @@ namespace DI
           BindType.Singleton, type => _singletons.TryGetValue(type, out object result) ? result : null
         }
       };
+
+      Bind(this, BindType.Singleton);
     }
 
     public T Resolve<T>()
@@ -110,6 +112,7 @@ namespace DI
     public void CreateAndBind<T> (BindType bindType)
       where T : class
     {
+      //TODO: probably should add creation and injection of gameObjects
       object instance = CreateInstance(typeof(T));
       Bind(instance, bindType);
     }
@@ -168,6 +171,8 @@ namespace DI
     private void AddBinding (Type type, BindType bindType)
     {
       if (_binds.ContainsKey(type)) {
+        Debug.LogWarning($"Beware, you're rebinding {type.Name}");
+
         if (_binds[type] != bindType) {
           Debug.LogWarning($"Bind type for {type.Name} has been changed from {_binds[type]} to {bindType}");
           Unbind<Type>();

@@ -1,0 +1,21 @@
+using System.Collections;
+using UnityEngine;
+namespace Coroutines
+{
+  public class CoroutineRunner : MonoBehaviour
+  {
+    public Coroutine Run (IEnumerator coroutine)
+    {
+      return StartCoroutine(coroutine);
+    }
+
+    public void Stop (Coroutine coroutine)
+    {
+      if (coroutine == null) {
+        return;
+      }
+
+      StopCoroutine(coroutine);
+    }
+  }
+}

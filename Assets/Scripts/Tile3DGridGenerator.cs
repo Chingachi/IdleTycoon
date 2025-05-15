@@ -90,9 +90,9 @@ public class Tile3DGridGenerator : MonoBehaviour
           int offset = Random.Range(0, 100);
 
           if (offset % 3 == 1) {
-            position += new Vector3(_tileSize.x / 3f, 0, 0);
+            position += new Vector3(_tileSize.x / Random.Range(1, 4), 0, 0);
           } else if (offset % 3 == 2) {
-            position -= new Vector3(_tileSize.x / 3f, 0, 0);
+            position -= new Vector3(_tileSize.x / Random.Range(1, 4), 0, 0);
           }
 
           tile.transform.localPosition = position;

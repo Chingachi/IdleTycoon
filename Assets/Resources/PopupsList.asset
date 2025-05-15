@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PopupsList
   m_EditorClassIdentifier: 
   _popups: []
-  PopupCanvas: {fileID: 0}
+  PopupCanvas: {fileID: 7791702443607000527, guid: e54fc09adb685b5498b48e3a8f112060, type: 3}
