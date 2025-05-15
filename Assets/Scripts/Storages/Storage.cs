@@ -1,7 +1,7 @@
 namespace Storages
 {
   public abstract class Storage<T>
-    where T : new()
+    where T : IDto, new()
   {
     protected T _data;
 

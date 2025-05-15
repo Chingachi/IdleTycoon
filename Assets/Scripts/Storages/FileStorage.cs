@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Storages
 {
   public class FileStorage<T> : Storage<T>
-    where T : new()
+    where T : IDto, new()
   {
     protected override void LoadData()
     {
@@ -19,6 +19,7 @@ namespace Storages
         string readData = sr.ReadToEnd();
 
         _data = JsonUtility.FromJson<T>(readData);
+        _data.Deserialize();
       }
     }
 
@@ -27,6 +28,7 @@ namespace Storages
       StreamWriter sw = new StreamWriter(GetFileName());
 
       using (sw) {
+        _data.Serialize();
         string dataToSave = JsonUtility.ToJson(_data);
         sw.Write(dataToSave);
       }
