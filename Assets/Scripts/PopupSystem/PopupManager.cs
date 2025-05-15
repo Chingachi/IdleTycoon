@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DI;
 using PopupSystem.Components;
 using PopupSystem.Dtos;
 using UnityEngine;
@@ -10,13 +11,15 @@ namespace PopupSystem
   public class PopupManager
   {
     private readonly PopupsSO _popupList;
+    private readonly DiContainer _container;
 
     private readonly Queue<QueuePopup> _popupInstancesQueue = new Queue<QueuePopup>();
     private readonly List<BasePopup> _visiblePopups = new List<BasePopup>();
     private Transform _canvas;
 
-    public PopupManager()
+    public PopupManager (DiContainer container)
     {
+      _container = container;
       _popupList = Resources.Load<PopupsSO>("PopupsList");
       InitCanvas();
     }
@@ -90,14 +93,19 @@ namespace PopupSystem
 
     private void ShowPopup (BasePopup instance, IPopupData data)
     {
-      GameObject popupGo = Object.Instantiate(instance.gameObject, _canvas);
+      var popupGo = Object.Instantiate(instance, _canvas);
       BasePopup popup = popupGo.GetComponent<BasePopup>();
 
+      popup.SetContainer(_container);
       popup.SetData(data);
 
       _visiblePopups.Add(popup);
-      popup.Show();
+      popup.OnClose += () =>
+      {
+        ClosePopup(data.GetPopupType());
+      };
       data.Callback?.Invoke(popup);
+      popup.Show();
     }
   }
 }

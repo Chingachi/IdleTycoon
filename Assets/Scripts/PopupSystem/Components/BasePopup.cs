@@ -1,25 +1,35 @@
 using System;
+using DI;
 using UnityEngine;
 using UnityEngine.UI;
 namespace PopupSystem.Components
 {
   public abstract class BasePopup : MonoBehaviour
   {
-    public event Action OnShow;
     public event Action OnClose;
+
     [SerializeField]
     protected Button _closeButton;
 
+    protected DiContainer _container;
+
     protected virtual void Awake()
     {
-      _closeButton?.onClick.AddListener(Close);
+      if (_closeButton != null) {
+        _closeButton.onClick.AddListener(Close);
+      }
     }
 
     public abstract void SetData (IPopupData data);
 
+    public void SetContainer(DiContainer container)
+    {
+      _container = container;
+    }
+
     public virtual void Show()
     {
-      OnShow?.Invoke();
+      
     }
 
     public virtual void Close()

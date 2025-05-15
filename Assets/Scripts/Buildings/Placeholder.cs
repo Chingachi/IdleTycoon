@@ -4,6 +4,9 @@ namespace Buildings
 {
   public class Placeholder : ClickableGameObject
   {
+    [SerializeField]
+    private Vector2 _size;
+
     private Building _building;
 
     protected override void OnMouseUpAsButton()
@@ -18,8 +21,7 @@ namespace Buildings
     public void AttachBuilding (Building building)
     {
       _building = building;
-      _building.transform.position = Vector3.zero;
-      building.transform.localPosition = Vector3.zero;
+      _building.transform.localPosition = new Vector3(-_size.x/2f, 0, -_size.y/2f);
     }
   }
 }

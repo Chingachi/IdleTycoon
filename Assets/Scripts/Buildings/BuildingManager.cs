@@ -1,5 +1,12 @@
+using System;
 using System.Collections.Generic;
 using Buildings.Dto;
+using DI;
+using DI.Contexts;
+using Popups.Buildings;
+using Popups.Buildings.Selection;
+using PopupSystem;
+using PopupSystem.Components;
 using UnityEngine;
 namespace Buildings
 {
@@ -10,19 +17,53 @@ namespace Buildings
     [SerializeField]
     private BuildingsSO _buildingsDatabase;
 
+    private PopupManager _popupManager;
+    private Placeholder _selectedPlaceholder;
+
     private void Awake()
     {
+      InitBindings();
+      
       foreach (Placeholder placeholder in _placeholders) {
-        placeholder.OnClick += () => SpawnRandomBuilding(placeholder);
+        placeholder.OnClick += ()=>  SelectBuilding(placeholder);
       }
     }
 
-    private void SpawnRandomBuilding (Placeholder placeholder)
+    private void InitBindings()
     {
-      BuildingDto data = _buildingsDatabase.GetRandomHouse();
-      Building building = Instantiate(data.Prefab, placeholder.gameObject.transform);
+      var container = ProjectContext.Instance.Container;
+      container.Bind(this, BindType.Cached);
+      container.Bind(_buildingsDatabase, BindType.Cached);
+      _popupManager = container.Resolve<PopupManager>();
+    }
+
+    private void SelectBuilding(Placeholder placeholder)
+    {
+      _selectedPlaceholder = placeholder;
+      SelectBuildingPopupData data = new SelectBuildingPopupData();
+      data.Callback += HandlePopup;
+      _popupManager.OpenPopup(data);
+    }
+
+    private void HandlePopup (BasePopup resultPopup)
+    {
+      SelectBuildingPopup popup = (SelectBuildingPopup)resultPopup;
+      popup.OnBuildingSelection += SpawnRandomBuilding;
+    }
+
+    private void SpawnRandomBuilding (string buildingName)
+    {
+      
+      BuildingDto data = _buildingsDatabase.GetBuildingByNameOrNull(buildingName);
+
+      if (data == null) {
+        throw new Exception($"No building with name [{buildingName}] in database");
+      }
+
+      Building building = Instantiate(data.Prefab, _selectedPlaceholder.gameObject.transform);
       building.name = data.Name;
-      placeholder.AttachBuilding(building);
+      _selectedPlaceholder.AttachBuilding(building);
+      _selectedPlaceholder = null;
     }
   }
 }

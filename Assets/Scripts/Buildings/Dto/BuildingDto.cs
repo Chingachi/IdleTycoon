@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 namespace Buildings.Dto
 {
   [Serializable]
@@ -8,16 +9,18 @@ namespace Buildings.Dto
     public string Name;
     public BuildingType Type;
     public int Price;
+    public Sprite Preview;
     public Building Prefab;
 
     public BuildingDto()
     {}
 
-    public BuildingDto (string name, BuildingType type, int price, Building prefab)
+    public BuildingDto (string name, BuildingType type, int price, Sprite preview, Building prefab)
     {
       Name = name;
       Type = type;
       Price = price;
+      Preview = preview;
       Prefab = prefab;
     }
 
@@ -26,6 +29,7 @@ namespace Buildings.Dto
       Name = dto.Name;
       Type = dto.Type;
       Price = dto.Price;
+      Preview = dto.Preview;
       Prefab = dto.Prefab;
     }
   }

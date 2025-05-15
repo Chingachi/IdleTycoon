@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 namespace Buildings.Dto
 {
@@ -10,12 +11,17 @@ namespace Buildings.Dto
 
     public List<BuildingDto> GetAllBuildings()
     {
-      return new List<BuildingDto>(_buildings);
+      return _buildings;
     }
 
     public BuildingDto GetRandomHouse()
     {
-      return new BuildingDto(_buildings[Random.Range(0, _buildings.Count)]);
+      return _buildings[Random.Range(0, _buildings.Count)];
+    }
+
+    public BuildingDto GetBuildingByNameOrNull(string buildingName)
+    {
+      return _buildings.FirstOrDefault(x => x.Name == buildingName);
     }
   }
 }

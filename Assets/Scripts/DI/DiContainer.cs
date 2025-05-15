@@ -117,6 +117,15 @@ namespace DI
       Bind(instance, bindType);
     }
 
+    public void ClearCache()
+    {
+      foreach (KeyValuePair<Type,object> cache in _caches) {
+        if (_binds.ContainsKey(cache.Key) && _binds[cache.Key] == BindType.Cached) {
+          _binds.Remove(cache.Key);
+        }
+      }
+      _caches.Clear();
+    }
 
     public void Unbind<T>()
       where T : class
