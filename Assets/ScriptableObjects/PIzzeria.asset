@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8d0ca5f98144cbbb723ef028bb32a9, type: 3}
+  m_Name: PIzzeria
+  m_EditorClassIdentifier: 
+  Name: Pizza place
+  Type: 2
+  Description: Tasty pizza for tired guests. Generates frequent income with minimal
+    upkeep.
+  Price: 5000
+  BaseIncome: 15
+  BaseIncomePeriod: 4
+  BaseDecayCoefficient: 0.8
+  Preview: {fileID: 21300000, guid: 53ac14b388c6bfc489955742e260ac65, type: 3}
+  Prefab: {fileID: -3953982310540314857, guid: a1b05943ecb77f24ea8f6feaa2d06ec2, type: 3}

@@ -1,16 +1,17 @@
 using System;
 using System.Collections;
+using Coroutines;
 using UnityEngine;
 namespace Timers
 {
-  public class TickTimer : MonoBehaviour
+  public class TickTimer
   {
     public event Action OnTick;
     private Coroutine _coroutine;
 
-    private void Start()
+    public TickTimer(CoroutineRunner runner)
     {
-      _coroutine = StartCoroutine(TickLoop());
+      runner.Run(TickLoop());
     }
 
     private IEnumerator TickLoop()

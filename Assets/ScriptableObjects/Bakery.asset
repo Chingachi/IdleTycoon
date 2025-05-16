@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8d0ca5f98144cbbb723ef028bb32a9, type: 3}
+  m_Name: Bakery
+  m_EditorClassIdentifier: 
+  Name: Bakery
+  Type: 6
+  Description: "Fresh baked goods for everyone. A balanced option between caf\xE9
+    and shop."
+  Price: 3000
+  BaseIncome: 8
+  BaseIncomePeriod: 2.5
+  BaseDecayCoefficient: 0.85
+  Preview: {fileID: 21300000, guid: f2a998cab62e540458009175d65f03dd, type: 3}
+  Prefab: {fileID: 8159385597538384353, guid: f05030334485c4240a1383d7bf388fb8, type: 3}

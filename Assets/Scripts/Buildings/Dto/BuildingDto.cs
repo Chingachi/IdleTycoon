@@ -2,35 +2,48 @@ using System;
 using UnityEngine;
 namespace Buildings.Dto
 {
-  [Serializable]
-  public class BuildingDto
+  [Serializable, CreateAssetMenu(fileName = "Building", menuName = "ScriptableObjects/Building", order = 3)]
+  public class BuildingDto : ScriptableObject
   {
 
     public string Name;
     public BuildingType Type;
+    public string Description;
     public int Price;
+    public int BaseIncome;
+    public float BaseIncomePeriod;
+    public float BaseDecayCoefficient;
     public Sprite Preview;
     public Building Prefab;
 
     public BuildingDto()
     {}
 
-    public BuildingDto (string name, BuildingType type, int price, Sprite preview, Building prefab)
+    public BuildingDto (
+      string name, BuildingType type, string description, int price, int baseIncome, float baseIncomePeriod, float baseDecayCoefficient, Sprite preview, Building prefab)
     {
       Name = name;
       Type = type;
+      Description = description;
       Price = price;
+      BaseIncome = baseIncome;
+      BaseIncomePeriod = baseIncomePeriod;
+      BaseDecayCoefficient = baseDecayCoefficient;
       Preview = preview;
       Prefab = prefab;
     }
 
-    public BuildingDto (BuildingDto dto)
+    public BuildingDto (BuildingDto source)
     {
-      Name = dto.Name;
-      Type = dto.Type;
-      Price = dto.Price;
-      Preview = dto.Preview;
-      Prefab = dto.Prefab;
+      Name = source.Name;
+      Type = source.Type;
+      Description = source.Description;
+      Price = source.Price;
+      BaseIncome = source.BaseIncome;
+      BaseIncomePeriod = source.BaseIncomePeriod;
+      BaseDecayCoefficient = source.BaseDecayCoefficient;
+      Preview = source.Preview;
+      Prefab = source.Prefab;
     }
   }
 }
