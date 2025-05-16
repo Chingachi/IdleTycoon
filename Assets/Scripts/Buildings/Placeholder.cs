@@ -21,6 +21,7 @@ namespace Buildings
     public void AttachBuilding (Building building)
     {
       _building = building;
+      _building.transform.SetParent(transform);
       _building.transform.localPosition = new Vector3(-_size.x/2f, 0, -_size.y/2f);
     }
   }

@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: A comfortable hotel with multiple rooms. Suitable for all kinds of
     travelers.
   Price: 8000
+  BaseUpgradePrice: 3000
   BaseIncome: 45
   BaseIncomePeriod: 7
   BaseDecayCoefficient: 0.65

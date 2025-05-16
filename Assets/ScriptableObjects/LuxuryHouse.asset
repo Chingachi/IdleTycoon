@@ -16,6 +16,7 @@ MonoBehaviour:
   Type: 102
   Description: Luxurious housing for demanding guests. Expensive but highly profitable.
   Price: 10000
+  BaseUpgradePrice: 4000
   BaseIncome: 60
   BaseIncomePeriod: 8
   BaseDecayCoefficient: 0.7

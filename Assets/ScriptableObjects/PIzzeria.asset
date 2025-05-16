@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: Tasty pizza for tired guests. Generates frequent income with minimal
     upkeep.
   Price: 5000
+  BaseUpgradePrice: 1800
   BaseIncome: 15
   BaseIncomePeriod: 4
   BaseDecayCoefficient: 0.8

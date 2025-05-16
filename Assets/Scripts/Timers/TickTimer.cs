@@ -16,7 +16,7 @@ namespace Timers
 
     private IEnumerator TickLoop()
     {
-      WaitForSecondsRealtime wait = new WaitForSecondsRealtime(1f);
+      WaitForSecondsRealtime wait = new WaitForSecondsRealtime(0.1f);
 
       while (true) {
         yield return wait;

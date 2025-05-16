@@ -16,6 +16,7 @@ MonoBehaviour:
   Type: 3
   Description: Refueling station for passing vehicles. Stable and consistent profit.
   Price: 7000
+  BaseUpgradePrice: 2500
   BaseIncome: 30
   BaseIncomePeriod: 7
   BaseDecayCoefficient: 0.6

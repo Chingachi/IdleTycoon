@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: A cozy residence for couples and tourists. Brings more profit than
     the small house.
   Price: 3000
+  BaseUpgradePrice: 1500
   BaseIncome: 25
   BaseIncomePeriod: 6
   BaseDecayCoefficient: 0.6

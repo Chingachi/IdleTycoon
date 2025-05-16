@@ -16,6 +16,7 @@ MonoBehaviour:
   Type: 7
   Description: A place for rest and entertainment. Slow but brings in big revenue.
   Price: 15000
+  BaseUpgradePrice: 6000
   BaseIncome: 50
   BaseIncomePeriod: 9
   BaseDecayCoefficient: 0.65

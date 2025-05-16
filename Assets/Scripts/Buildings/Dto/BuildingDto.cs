@@ -10,6 +10,7 @@ namespace Buildings.Dto
     public BuildingType Type;
     public string Description;
     public int Price;
+    public int BaseUpgradePrice;
     public int BaseIncome;
     public float BaseIncomePeriod;
     public float BaseDecayCoefficient;
@@ -20,12 +21,13 @@ namespace Buildings.Dto
     {}
 
     public BuildingDto (
-      string name, BuildingType type, string description, int price, int baseIncome, float baseIncomePeriod, float baseDecayCoefficient, Sprite preview, Building prefab)
+      string name, BuildingType type, string description, int price, int baseUpgradePrice, int baseIncome, float baseIncomePeriod, float baseDecayCoefficient, Sprite preview, Building prefab)
     {
       Name = name;
       Type = type;
       Description = description;
       Price = price;
+      BaseUpgradePrice = baseUpgradePrice;
       BaseIncome = baseIncome;
       BaseIncomePeriod = baseIncomePeriod;
       BaseDecayCoefficient = baseDecayCoefficient;
@@ -39,6 +41,7 @@ namespace Buildings.Dto
       Type = source.Type;
       Description = source.Description;
       Price = source.Price;
+      BaseUpgradePrice = source.BaseUpgradePrice;
       BaseIncome = source.BaseIncome;
       BaseIncomePeriod = source.BaseIncomePeriod;
       BaseDecayCoefficient = source.BaseDecayCoefficient;

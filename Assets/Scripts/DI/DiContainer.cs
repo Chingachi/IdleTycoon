@@ -117,6 +117,12 @@ namespace DI
       Bind(instance, bindType);
     }
 
+    public void CreateAndBindTo<TReference, TInstance> (BindType bindType) where TInstance : class, TReference where TReference : class
+    {
+      object instance = CreateInstance(typeof(TInstance));
+      BindTo(instance, typeof(TReference), bindType);
+    }
+
     public void ClearCache()
     {
       foreach (KeyValuePair<Type,object> cache in _caches) {

@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: A full-fledged shop for locals and visitors. Medium profit and high
     traffic.
   Price: 4000
+  BaseUpgradePrice: 1600
   BaseIncome: 12
   BaseIncomePeriod: 3
   BaseDecayCoefficient: 0.7

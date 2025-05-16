@@ -16,6 +16,7 @@ MonoBehaviour:
   Type: 100
   Description: A small house for lone travelers. Cheap and quick to build.
   Price: 1000
+  BaseUpgradePrice: 500
   BaseIncome: 10
   BaseIncomePeriod: 5
   BaseDecayCoefficient: 0.5

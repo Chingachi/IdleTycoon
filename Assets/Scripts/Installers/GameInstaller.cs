@@ -1,4 +1,7 @@
 using DI;
+using IncomeSystem;
+using Storages;
+using Storages.Base;
 using Timers;
 namespace Installers
 {
@@ -8,6 +11,8 @@ namespace Installers
     public override void InstallBindings()
     {
       Container.CreateAndBind<TickTimer>(BindType.Cached);
+      Container.CreateAndBindTo<Storage<BuildingsStorage>, FileStorage<BuildingsStorage>>(BindType.Cached);
+      Container.CreateAndBind<IncomeManager>(BindType.Cached);
     }
 
     public override void RemoveBindings()

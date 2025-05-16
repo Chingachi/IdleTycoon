@@ -16,6 +16,7 @@ MonoBehaviour:
   Type: 4
   Description: Quick coffee for those in a hurry. Frequent but small income.
   Price: 2500
+  BaseUpgradePrice: 1000
   BaseIncome: 5
   BaseIncomePeriod: 2
   BaseDecayCoefficient: 0.9

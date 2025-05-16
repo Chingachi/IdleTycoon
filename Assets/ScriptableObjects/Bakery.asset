@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: "Fresh baked goods for everyone. A balanced option between caf\xE9
     and shop."
   Price: 3000
+  BaseUpgradePrice: 1200
   BaseIncome: 8
   BaseIncomePeriod: 2.5
   BaseDecayCoefficient: 0.85
