@@ -5,9 +5,10 @@ using Buildings.BuildingState.Income;
 using Buildings.Dto;
 using DI;
 using DI.Contexts;
-using Popups.Buildings.Selection;
-using PopupSystem;
-using PopupSystem.Components;
+using EventSystemComponents;
+using Popups.Buildings.Buy;
+using Popups.Buildings.Selection.Manager;
+using Popups.Buildings.Selection.Popup;
 using Storages;
 using Storages.Base;
 using UnityEngine;
@@ -22,11 +23,14 @@ namespace Buildings
     [SerializeField]
     private StatusIndicator _statusIndicatorPrefab;
 
-    private PopupManager _popupManager;
     private Placeholder _selectedPlaceholder;
+
     private IncomeManager _incomeManager;
     private DecayManager _decayManager;
     private Storage<BuildingsSaveData> _storage;
+    private EventManager _eventManager;
+
+    private SelectBuildingPopupManager _selectBuildingPopupManager;
 
     private void Awake()
     {
@@ -40,8 +44,14 @@ namespace Buildings
     {
       InitBindings();
       LoadBuildings();
+      _eventManager.SubscribeEvent<BuildingPurchasedEvent>(SpawnSelectedBuilding);
       _incomeManager.Start();
       _decayManager.Start();
+    }
+
+    private void OnDestroy()
+    {
+      _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(SpawnSelectedBuilding);
     }
 
     private void LoadBuildings()
@@ -57,31 +67,29 @@ namespace Buildings
       container.Bind(this, BindType.Cached);
       container.Bind(_buildingsDatabase, BindType.Cached);
 
-      _popupManager = container.Resolve<PopupManager>();
       _incomeManager = container.Resolve<IncomeManager>();
       _storage = container.Resolve<Storage<BuildingsSaveData>>();
       _decayManager = container.Resolve<DecayManager>();
+      _eventManager = container.Resolve<EventManager>();
+
+      _selectBuildingPopupManager = container.Resolve<SelectBuildingPopupManager>();
     }
 
     private void SelectBuilding (Placeholder placeholder)
     {
+      if (_selectedPlaceholder != null) {
+        return;
+      }
+
       _selectedPlaceholder = placeholder;
-      SelectBuildingPopupData data = new SelectBuildingPopupData();
-      data.Callback += HandlePopup;
-      _popupManager.OpenPopup(data);
+      _selectBuildingPopupManager.OpenPopup(new SelectBuildingPopupData());
     }
 
-    private void HandlePopup (BasePopup resultPopup)
+    private void SpawnSelectedBuilding (BuildingPurchasedEvent eventData)
     {
-      SelectBuildingPopup popup = (SelectBuildingPopup)resultPopup;
-      popup.OnBuildingSelection += SpawnSelectedBuilding;
-    }
+      BuildingDto dto = _buildingsDatabase.GetBuildingByNameOrNull(eventData.BuildingDto.Name);
 
-    private void SpawnSelectedBuilding (string buildingName)
-    {
-      BuildingDto dto = _buildingsDatabase.GetBuildingByNameOrNull(buildingName);
-
-      Building building = InstantiateBuilding(dto, buildingName);
+      Building building = InstantiateBuilding(dto, eventData.BuildingDto.Name);
       _selectedPlaceholder.AttachBuilding(building);
 
       BuildingData buildingData = new BuildingData(dto)

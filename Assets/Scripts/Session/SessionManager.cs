@@ -1,8 +1,10 @@
 using System;
 using Buildings.BuildingState.Income;
 using EventSystemComponents;
+using Popups.Buildings.Buy;
 using Storages;
 using Storages.Base;
+using UnityEngine;
 namespace Session
 {
   public class SessionManager
@@ -16,19 +18,38 @@ namespace Session
       _eventManager = eventManager;
       _storage = storage;
       _eventManager.SubscribeEvent<IncomeEvent>(HandleIncome);
+      _eventManager.SubscribeEvent<BuildingPurchasedEvent>(HandleBuildingPurchase);
     }
 
     ~SessionManager()
     {
       _eventManager.UnsubscribeEvent<IncomeEvent>(HandleIncome);
+      _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(HandleBuildingPurchase);
     }
+
+
+    private void HandleBuildingPurchase (BuildingPurchasedEvent eventData)
+    {
+      ChangeBalance(eventData.BuildingDto.Price, BalanceChangeEvent.BalanceChangeType.Outcome);
+    }
+
 
     private void HandleIncome (IncomeEvent eventData)
     {
-      _storage.Data.Money += (int)eventData.Money;
+      ChangeBalance((int)eventData.Money, BalanceChangeEvent.BalanceChangeType.Income);
+    }
+
+    private void ChangeBalance (int amount, BalanceChangeEvent.BalanceChangeType type)
+    {
+      if (type == BalanceChangeEvent.BalanceChangeType.Income) {
+        _storage.Data.Money += amount;
+      } else {
+        _storage.Data.Money = Mathf.Max(0, _storage.Data.Money - amount);
+      }
+
       _storage.Data.LastTimeUpdated = DateTime.UtcNow.Ticks;
       _storage.UpdateData();
-      _eventManager.Fire(new BalanceChangeEvent(_storage.Data.Money, eventData.Money, BalanceChangeEvent.BalanceChangeType.Income));
+      _eventManager.Fire(new BalanceChangeEvent(_storage.Data.Money, amount, BalanceChangeEvent.BalanceChangeType.Income));
     }
   }
 }
