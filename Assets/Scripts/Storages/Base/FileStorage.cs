@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Storages.Base
 {
   public class FileStorage<T> : Storage<T>
-    where T : IData, new()
+    where T : ISaveData, new()
   {
     protected override void LoadData()
     {

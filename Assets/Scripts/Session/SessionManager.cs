@@ -8,10 +8,10 @@ namespace Session
   public class SessionManager
   {
     private readonly EventManager _eventManager;
-    private readonly Storage<SessionSaveData> _storage;
+    private readonly Storage<ProfileSaveData> _storage;
 
 
-    public SessionManager (EventManager eventManager, Storage<SessionSaveData> storage)
+    public SessionManager (EventManager eventManager, Storage<ProfileSaveData> storage)
     {
       _eventManager = eventManager;
       _storage = storage;

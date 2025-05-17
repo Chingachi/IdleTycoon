@@ -1,7 +1,8 @@
+using System;
 namespace Storages.Base
 {
   public abstract class Storage<T>
-    where T : IData, new()
+    where T : ISaveData, new()
   {
     protected T _data;
 
@@ -23,7 +24,10 @@ namespace Storages.Base
 
     protected virtual string GetKey()
     {
-      return typeof(T).Name;
+      Type type = typeof(T);
+      SaveFilenameAttribute attribute = Attribute.GetCustomAttribute(type, typeof(SaveFilenameAttribute)) as SaveFilenameAttribute;
+
+      return attribute == null ? type.Name : attribute.Filename;
     }
 
     public T Data

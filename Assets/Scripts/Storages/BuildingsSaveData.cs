@@ -4,8 +4,8 @@ using Buildings;
 using Storages.Base;
 namespace Storages
 {
-  [Serializable]
-  public class BuildingsSaveData : IData
+  [Serializable, SaveFilename("BuildingsInfo")]
+  public class BuildingsSaveData : ISaveData
   {
     public List<BuildingData> buildingsData = new List<BuildingData>();
 

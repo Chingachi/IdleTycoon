@@ -1,6 +1,6 @@
 namespace Storages.Base
 {
-  public interface IData
+  public interface ISaveData
   {
     public void Serialize();
 

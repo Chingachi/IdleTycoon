@@ -29,7 +29,7 @@ namespace UI
     {
       _eventManager = ProjectContext.Container.Resolve<EventManager>();
       _eventManager.SubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
-      _moneyField.text = $"${ProjectContext.Container.Resolve<Storage<SessionSaveData>>().Data.Money}";
+      _moneyField.text = $"${ProjectContext.Container.Resolve<Storage<ProfileSaveData>>().Data.Money}";
       _pool = new SimpleMonoObjectPool<TMP_Text>(_moneyField, transform);
     }
 

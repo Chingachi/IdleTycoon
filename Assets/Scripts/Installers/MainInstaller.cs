@@ -16,7 +16,7 @@ namespace Installers
       Container.CreateAndBind<EventManager>(BindType.Singleton);
       Container.CreateAndBind<SceneController>(BindType.Singleton);
       Container.CreateAndBind<PopupManager>(BindType.Singleton);
-      Container.CreateAndBindTo<Storage<SessionSaveData>, FileStorage<SessionSaveData>>(BindType.Transient);
+      Container.CreateAndBindTo<Storage<ProfileSaveData>, FileStorage<ProfileSaveData>>(BindType.Transient);
       Container.CreateAndBind<SessionManager>(BindType.Singleton);
     }
   }
