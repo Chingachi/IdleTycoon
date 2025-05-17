@@ -1,3 +1,4 @@
+using Common;
 using Coroutines;
 using Storages;
 using Storages.Base;
@@ -6,7 +7,6 @@ namespace Buildings.BuildingState
 {
   public class DecayManager : TimingManager
   {
-    private const float DECAY_PERIOD_SECONDS = 60f;
     private readonly Storage<BuildingsSaveData> _storage;
 
     public DecayManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer, Storage<BuildingsSaveData> storage)
@@ -17,7 +17,7 @@ namespace Buildings.BuildingState
 
     protected override float GetTiming (Building building)
     {
-      return DECAY_PERIOD_SECONDS;
+      return Constants.DECAY_IN_SECONDS;
     }
 
     protected override void HandleChange (Building building)

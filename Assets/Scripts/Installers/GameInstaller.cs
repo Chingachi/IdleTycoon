@@ -1,6 +1,7 @@
 using Buildings.BuildingState;
 using Buildings.BuildingState.Income;
 using DI;
+using Offline;
 using Storages;
 using Storages.Base;
 using Timers;
@@ -14,6 +15,8 @@ namespace Installers
       Container.CreateAndBindTo<Storage<BuildingsSaveData>, FileStorage<BuildingsSaveData>>(BindType.Cached);
       Container.CreateAndBind<IncomeManager>(BindType.Cached);
       Container.CreateAndBind<DecayManager>(BindType.Cached);
+
+      Container.CreateAndBind<OfflineIncomeCalculator>(BindType.Transient);
     }
   }
 }

@@ -1,5 +1,6 @@
 using System;
 using Buildings.Dto;
+using Common;
 using UnityEngine;
 namespace Buildings
 {
@@ -57,7 +58,11 @@ namespace Buildings
 
     public float GetCurrentIncome()
     {
-      return BaseIncome * (1 + 0.5f * Level);
+      if (CurrentDecay < Constants.MINIMUM_INCOME_DECAY) {
+        return 0;
+      }
+
+      return BaseIncome * (1 + 0.5f * Level) * CurrentDecay;
     }
 
     public float GetCurrentUpgradePrice()
