@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Buildings;
 using Coroutines;
+using EventSystemComponents;
 using Storages;
 using Storages.Base;
 using Timers;
@@ -10,20 +11,23 @@ namespace IncomeSystem
 {
   public class IncomeManager
   {
-    private List<Building> _buildings = new List<Building>();
     private readonly CoroutineRunner _coroutineRunner;
     private readonly TickTimer _tickTimer;
-    private readonly Storage<BuildingsStorage> _storage;
+    private readonly Storage<BuildingsSaveData> _storage;
+    private readonly EventManager _eventManager;
 
-    private Dictionary<Building, float> _buildingTimings = new Dictionary<Building, float>();
+    private readonly List<Building> _buildings = new List<Building>();
+
+    private readonly Dictionary<Building, float> _buildingTimings = new Dictionary<Building, float>();
 
     private Coroutine _coroutine;
 
-    public IncomeManager(CoroutineRunner coroutineRunner, TickTimer tickTimer, Storage<BuildingsStorage> storage)
+    public IncomeManager (CoroutineRunner coroutineRunner, TickTimer tickTimer, Storage<BuildingsSaveData> storage, EventManager eventManager)
     {
       _coroutineRunner = coroutineRunner;
       _tickTimer = tickTimer;
       _storage = storage;
+      _eventManager = eventManager;
       _tickTimer.OnTick += HandleTick;
     }
 
@@ -31,14 +35,6 @@ namespace IncomeSystem
     {
       _tickTimer.OnTick -= HandleTick;
       _coroutineRunner.Stop(_coroutine);
-    }
-
-    private void HandleTick()
-    {
-      foreach (Building building in _buildings) {
-        building.Data.WaitedSeconds+=0.1f;
-        building.UpdateIndicators();
-      }
     }
 
     public void RegisterBuilding (Building building)
@@ -51,9 +47,17 @@ namespace IncomeSystem
       _coroutine = _coroutineRunner.Run(WaitAndCountIncome());
     }
 
+    private void HandleTick()
+    {
+      foreach (Building building in _buildings) {
+        building.Data.WaitedSeconds += 0.1f;
+        building.UpdateIndicators();
+      }
+    }
+
     private IEnumerator WaitAndCountIncome()
     {
-      var wait = new WaitForSecondsRealtime(1);
+      WaitForSecondsRealtime wait = new WaitForSecondsRealtime(1);
       float waitingTime = 0;
 
       while (true) {
@@ -110,7 +114,7 @@ namespace IncomeSystem
 
     private void HandleIncome (Building building)
     {
-      Debug.Log($"Handle income: {building.Data.GetCurrentIncome()}");
+      _eventManager.Fire(new IncomeEvent(building.Data.GetCurrentIncome()));
       building.Data.WaitedSeconds = 0;
       building.UpdateIndicators();
       SaveData();
@@ -119,6 +123,7 @@ namespace IncomeSystem
     private void SaveData()
     {
       List<BuildingData> dataList = new List<BuildingData>();
+
       foreach (Building building in _buildings) {
         dataList.Add(building.Data);
       }

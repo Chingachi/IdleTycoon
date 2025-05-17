@@ -24,14 +24,5 @@ namespace DI.Contexts
         installer.RemoveBindings();
       }
     }
-
-
-    public DiContainer Container
-    {
-      get
-      {
-        return _container;
-      }
-    }
   }
 }

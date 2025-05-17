@@ -4,7 +4,7 @@
   {
     private void Awake()
     {
-      _container = ProjectContext.Instance.Container;
+      _container = ProjectContext.Container;
       BindInstallers();
     }
   }

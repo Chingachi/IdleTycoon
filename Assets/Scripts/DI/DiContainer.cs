@@ -9,7 +9,7 @@ namespace DI
   {
     private readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
     private readonly Dictionary<Type, object> _caches = new Dictionary<Type, object>();
-    private readonly HashSet<Type> _transients = new HashSet<Type>();
+    private readonly Dictionary<Type, Type> _transients = new Dictionary<Type, Type>();
 
     private readonly Dictionary<Type, BindType> _binds = new Dictionary<Type, BindType>();
 
@@ -22,7 +22,7 @@ namespace DI
       _binders = new Dictionary<BindType, Action<Type, object>>
       {
         {
-          BindType.Transient, (type, instance) => _transients.Add(type)
+          BindType.Transient, (type, instance) => _transients.Add(type, instance.GetType())
         },
         {
           BindType.Cached, (type, instance) => AddToDictionary(type, instance, _caches)
@@ -52,7 +52,7 @@ namespace DI
       {
 
         {
-          BindType.Transient, CreateInstance
+          BindType.Transient, type => _transients.TryGetValue(type, out Type implType) ? CreateInstance(implType) : null
         },
         {
           BindType.Cached, type => _caches.TryGetValue(type, out object result) ? result : null
@@ -117,7 +117,8 @@ namespace DI
       Bind(instance, bindType);
     }
 
-    public void CreateAndBindTo<TReference, TInstance> (BindType bindType) where TInstance : class, TReference where TReference : class
+    public void CreateAndBindTo<TReference, TInstance> (BindType bindType)
+      where TInstance : class, TReference where TReference : class
     {
       object instance = CreateInstance(typeof(TInstance));
       BindTo(instance, typeof(TReference), bindType);
@@ -125,11 +126,12 @@ namespace DI
 
     public void ClearCache()
     {
-      foreach (KeyValuePair<Type,object> cache in _caches) {
+      foreach (KeyValuePair<Type, object> cache in _caches) {
         if (_binds.ContainsKey(cache.Key) && _binds[cache.Key] == BindType.Cached) {
           _binds.Remove(cache.Key);
         }
       }
+
       _caches.Clear();
     }
 

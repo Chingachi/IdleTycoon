@@ -5,6 +5,6 @@ public class GameStarter : MonoBehaviour
 {
   private void Start()
   {
-    ProjectContext.Instance.Container.Resolve<SceneController>().ChangeScene("Game");
+    ProjectContext.Container.Resolve<SceneController>().ChangeScene("Game");
   }
 }

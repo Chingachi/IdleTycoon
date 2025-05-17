@@ -2,7 +2,15 @@
 {
   public class ProjectContext : BaseContext
   {
-    public static ProjectContext Instance
+
+    public static DiContainer Container
+    {
+      get
+      {
+        return Instance._container;
+      }
+    }
+    private static ProjectContext Instance
     {
       get;
       set;
