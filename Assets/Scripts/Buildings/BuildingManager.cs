@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Buildings.BuildingState;
+using Buildings.BuildingState.Income;
 using Buildings.Dto;
 using DI;
 using DI.Contexts;
-using IncomeSystem;
 using Popups.Buildings.Selection;
 using PopupSystem;
 using PopupSystem.Components;
@@ -24,6 +25,7 @@ namespace Buildings
     private PopupManager _popupManager;
     private Placeholder _selectedPlaceholder;
     private IncomeManager _incomeManager;
+    private DecayManager _decayManager;
     private Storage<BuildingsSaveData> _storage;
 
     private void Awake()
@@ -38,7 +40,8 @@ namespace Buildings
     {
       InitBindings();
       LoadBuildings();
-      _incomeManager.StartCounting();
+      _incomeManager.Start();
+      _decayManager.Start();
     }
 
     private void LoadBuildings()
@@ -53,9 +56,11 @@ namespace Buildings
       DiContainer container = ProjectContext.Container;
       container.Bind(this, BindType.Cached);
       container.Bind(_buildingsDatabase, BindType.Cached);
+
       _popupManager = container.Resolve<PopupManager>();
       _incomeManager = container.Resolve<IncomeManager>();
       _storage = container.Resolve<Storage<BuildingsSaveData>>();
+      _decayManager = container.Resolve<DecayManager>();
     }
 
     private void SelectBuilding (Placeholder placeholder)
@@ -85,7 +90,9 @@ namespace Buildings
       };
 
       building.SetData(buildingData);
+
       _incomeManager.RegisterBuilding(building);
+      _decayManager.RegisterBuilding(building);
 
       _selectedPlaceholder = null;
     }
@@ -104,8 +111,11 @@ namespace Buildings
 
       Placeholder placeholder = placeholdersParent.GetChild(data.PlaceholderIndex).GetComponent<Placeholder>();
       placeholder.AttachBuilding(building);
+
       building.SetData(data);
+
       _incomeManager.RegisterBuilding(building);
+      _decayManager.RegisterBuilding(building);
     }
 
     private Building InstantiateBuilding (BuildingDto data, string buildingName)

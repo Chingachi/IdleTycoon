@@ -17,12 +17,5 @@ namespace DI.Contexts
         installer.InstallBindings();
       }
     }
-
-    protected void UnbindInstallers()
-    {
-      foreach (BaseInstaller installer in _installers) {
-        installer.RemoveBindings();
-      }
-    }
   }
 }

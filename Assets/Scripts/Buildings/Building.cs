@@ -1,24 +1,21 @@
 using Common;
-using UnityEngine;
 namespace Buildings
 {
   public class Building : ClickableGameObject
   {
     private StatusIndicator _statusIndicator;
-    private BuildingData _data;
 
-    public void SetData(BuildingData data)
+    public void SetData (BuildingData data)
     {
-      _data = data;
+      Data = data;
       _statusIndicator.UpdateStatus(0, data.CurrentDecay);
     }
 
     public void UpdateIndicators()
     {
-      //TODO: change decay slider value
-      _statusIndicator.UpdateStatus(_data.WaitedSeconds/_data.GetCurrentIncomeTime(), _data.CurrentDecay);
+      _statusIndicator.UpdateStatus(Data.IncomeWaitedSeconds / Data.GetCurrentIncomeTime(), Data.CurrentDecay);
     }
-    
+
     public void SetIndicator (StatusIndicator indicator)
     {
       _statusIndicator = indicator;
@@ -26,9 +23,14 @@ namespace Buildings
 
     public BuildingData Data
     {
+      get;
+      private set;
+    }
+    public string Id
+    {
       get
       {
-        return _data;
+        return Data.Id;
       }
     }
   }

@@ -1,6 +1,6 @@
 using System;
+using Buildings.BuildingState.Income;
 using EventSystemComponents;
-using IncomeSystem;
 using Storages;
 using Storages.Base;
 namespace Session

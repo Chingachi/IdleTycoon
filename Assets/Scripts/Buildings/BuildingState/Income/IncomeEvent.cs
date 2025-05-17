@@ -1,5 +1,5 @@
 using EventSystemComponents;
-namespace IncomeSystem
+namespace Buildings.BuildingState.Income
 {
   public class IncomeEvent : BaseEvent
   {

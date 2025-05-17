@@ -19,8 +19,5 @@ namespace Installers
       Container.CreateAndBindTo<Storage<SessionSaveData>, FileStorage<SessionSaveData>>(BindType.Transient);
       Container.CreateAndBind<SessionManager>(BindType.Singleton);
     }
-
-    public override void RemoveBindings()
-    {}
   }
 }

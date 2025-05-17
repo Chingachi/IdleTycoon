@@ -12,8 +12,5 @@ namespace Coroutines
       CoroutineRunner runner = go.AddComponent<CoroutineRunner>();
       Container.Bind(runner, BindType.Singleton);
     }
-
-    public override void RemoveBindings()
-    {}
   }
 }

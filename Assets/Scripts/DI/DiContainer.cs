@@ -112,7 +112,6 @@ namespace DI
     public void CreateAndBind<T> (BindType bindType)
       where T : class
     {
-      //TODO: probably should add creation and injection of gameObjects
       object instance = CreateInstance(typeof(T));
       Bind(instance, bindType);
     }

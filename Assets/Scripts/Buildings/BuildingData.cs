@@ -6,6 +6,12 @@ namespace Buildings
   [Serializable]
   public class BuildingData
   {
+
+    [NonSerialized]
+    public float IncomeWaitedSeconds;
+    public long LastTimeDecayChanged;
+
+    public string Id;
     public string Name;
     public BuildingType Type;
     public int CurrentLevel;
@@ -13,16 +19,16 @@ namespace Buildings
 
     public int PlaceholderIndex;
 
-    [NonSerialized]
-    public float WaitedSeconds;
-
     public float BaseUpgradePrice;
     public float BaseIncome;
     public float BaseIncomeTime;
-    public float BaseDecayTime;
+    public float BaseDecayCoefficient;
 
-    public BuildingData (string name, BuildingType type, int currentLevel, float currentDecay, int placeholderIndex, float baseUpgradePrice, float baseIncome, float baseIncomeTime, float baseDecayTime)
+    public BuildingData (
+      string id, string name, BuildingType type, int currentLevel, float currentDecay, int placeholderIndex, float baseUpgradePrice, float baseIncome, float baseIncomeTime,
+      float baseDecayCoefficient, long lastTimeDecayChanged)
     {
+      Id = id;
       Name = name;
       Type = type;
       CurrentLevel = currentLevel;
@@ -31,12 +37,13 @@ namespace Buildings
       BaseUpgradePrice = baseUpgradePrice;
       BaseIncome = baseIncome;
       BaseIncomeTime = baseIncomeTime;
-      BaseDecayTime = baseDecayTime;
+      BaseDecayCoefficient = baseDecayCoefficient;
+      LastTimeDecayChanged = lastTimeDecayChanged;
     }
 
     public BuildingData (BuildingDto dto)
     {
-      
+      Id = Guid.NewGuid().ToString();
       Name = dto.Name;
       Type = dto.Type;
       CurrentLevel = 1;
@@ -44,7 +51,8 @@ namespace Buildings
       BaseUpgradePrice = dto.BaseUpgradePrice;
       BaseIncome = dto.BaseIncome;
       BaseIncomeTime = dto.BaseIncomePeriod;
-      BaseDecayTime = dto.BaseDecayCoefficient;
+      BaseDecayCoefficient = dto.BaseDecayCoefficient;
+      LastTimeDecayChanged = DateTime.UtcNow.Ticks;
     }
 
     public float GetCurrentIncome()
@@ -59,14 +67,23 @@ namespace Buildings
 
     public float GetCurrentIncomeTime()
     {
-      return BaseIncomeTime * (Mathf.Pow(0.98f, Level));
+      return BaseIncomeTime * Mathf.Pow(0.98f, Level);
     }
 
-    public float GetCurrentDecayTime()
+    public float GetCurrentDecayCoefficient()
     {
       int level = Level / 2;
 
-      return BaseDecayTime * (Mathf.Pow(0.98f, level));
+      float result = BaseDecayCoefficient * Mathf.Pow(0.9f, level);
+      result /= 100f;
+
+      return result;
+    }
+
+    public void ApplyDecay()
+    {
+      CurrentDecay -= GetCurrentDecayCoefficient();
+      LastTimeDecayChanged = DateTime.Now.Ticks;
     }
 
     private int Level
