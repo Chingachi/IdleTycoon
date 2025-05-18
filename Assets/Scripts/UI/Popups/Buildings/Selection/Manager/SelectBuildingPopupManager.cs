@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Buildings.Dto;
 using Core.EventSystemComponents;
@@ -15,6 +16,7 @@ namespace UI.Popups.Buildings.Selection.Manager
     private readonly BuyBuildingPopupManager _buyBuildingPopupManager;
     private readonly BuildingsSO _buildingsSo;
     private readonly Storage<ProfileSaveData> _storage;
+    public event Action OnCloseClick;
 
     public SelectBuildingPopupManager (
       PopupManager popupManager, EventManager eventManager, BuyBuildingPopupManager buyBuildingPopupManager, BuildingsSO buildingsSo, Storage<ProfileSaveData> storage)
@@ -45,6 +47,7 @@ namespace UI.Popups.Buildings.Selection.Manager
 
     protected override void HandleClose()
     {
+      OnCloseClick?.Invoke();
       _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(HandlePurchaseSelectedBuilding);
       _eventManager.UnsubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
     }

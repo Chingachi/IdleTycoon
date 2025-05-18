@@ -75,6 +75,7 @@ namespace Buildings
       _eventManager = container.Resolve<EventManager>();
 
       _selectBuildingPopupManager = container.Resolve<SelectBuildingPopupManager>();
+      _selectBuildingPopupManager.OnCloseClick += () => _selectedPlaceholder = null;
       _buildingInfoPopupManager = container.Resolve<BuildingInfoPopupManager>();
     }
 
