@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using Coroutines;
+using EventSystemComponents;
 using Timers;
 using UnityEngine;
 namespace Buildings.BuildingState
@@ -9,28 +11,37 @@ namespace Buildings.BuildingState
   {
     protected readonly CoroutineRunner _coroutineRunner;
     protected readonly PointOneSecondTimer _tickTimer;
+    protected readonly EventManager _eventManager;
 
     protected readonly List<Building> _buildings = new List<Building>();
     protected readonly Dictionary<string, float> _buildingTimings = new Dictionary<string, float>();
 
     protected Coroutine _coroutine;
     protected float waitedTime;
+    protected bool _paused;
 
-    protected TimingManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer)
+    protected TimingManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer, EventManager eventManager)
     {
       _coroutineRunner = coroutineRunner;
       _tickTimer = tickTimer;
+      _eventManager = eventManager;
+      _eventManager.SubscribeEvent<PauseEvent>(HandlePause);
       tickTimer.OnTick += HandleTenthOfSecondTick;
     }
 
     ~TimingManager()
     {
       _coroutineRunner.Stop(_coroutine);
+      _eventManager.UnsubscribeEvent<PauseEvent>(HandlePause);
       _tickTimer.OnTick -= HandleTenthOfSecondTick;
     }
 
     public void Start()
     {
+      if (_paused) {
+        return;
+      }
+
       _coroutine = _coroutineRunner.Run(WaitAndCountIncome());
     }
 
@@ -129,5 +140,16 @@ namespace Buildings.BuildingState
     protected abstract float GetTiming (Building building);
 
     protected abstract void HandleChange (Building building);
+
+    private void HandlePause (PauseEvent eventData)
+    {
+      _paused = eventData.PauseState;
+
+      if (eventData.PauseState) {
+        Stop();
+      } else {
+        Start();
+      }
+    }
   }
 }

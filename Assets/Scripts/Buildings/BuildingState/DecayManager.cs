@@ -1,24 +1,22 @@
 using Common;
 using Coroutines;
 using EventSystemComponents;
-using Popups.Buildings.Info.Events;
 using Storages;
 using Storages.Base;
 using Timers;
+using UI.Popups.Buildings.Info.Events;
 namespace Buildings.BuildingState
 {
   public class DecayManager : TimingManager
   {
     private readonly Storage<BuildingsSaveData> _storage;
-    private readonly EventManager _eventManager;
 
-    public DecayManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer, Storage<BuildingsSaveData> storage, EventManager eventManager)
-      : base(coroutineRunner, tickTimer)
+    public DecayManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer, EventManager eventManager, Storage<BuildingsSaveData> storage)
+      : base(coroutineRunner, tickTimer, eventManager)
     {
       _storage = storage;
-      _eventManager = eventManager;
-      eventManager.SubscribeEvent<RepairBuildingEvent>(HandleBuildingRepair);
-      eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
+      _eventManager.SubscribeEvent<RepairBuildingEvent>(HandleBuildingRepair);
+      _eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
     ~DecayManager()

@@ -1,11 +1,11 @@
 using Coroutines;
+using EventSystemComponents;
 namespace Timers
 {
   public class PointOneSecondTimer : TickTimer
   {
-
-    public PointOneSecondTimer (CoroutineRunner runner)
-      : base(runner)
+    public PointOneSecondTimer (CoroutineRunner runner, EventManager eventManager)
+      : base(runner, eventManager)
     {}
 
     protected override float GetWaitTimeInSeconds()

@@ -1,22 +1,20 @@
 using System.Collections.Generic;
 using Coroutines;
 using EventSystemComponents;
-using Popups.Buildings.Info.Events;
 using Storages;
 using Storages.Base;
 using Timers;
+using UI.Popups.Buildings.Info.Events;
 namespace Buildings.BuildingState.Income
 {
   public class IncomeManager : TimingManager
   {
     private readonly Storage<BuildingsSaveData> _storage;
-    private readonly EventManager _eventManager;
 
-    public IncomeManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer, Storage<BuildingsSaveData> storage, EventManager eventManager)
-      : base(coroutineRunner, tickTimer)
+    public IncomeManager (CoroutineRunner coroutineRunner, PointOneSecondTimer tickTimer, EventManager eventManager, Storage<BuildingsSaveData> storage)
+      : base(coroutineRunner, tickTimer, eventManager)
     {
       _storage = storage;
-      _eventManager = eventManager;
       _eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 

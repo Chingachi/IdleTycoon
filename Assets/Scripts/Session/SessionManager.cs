@@ -1,10 +1,10 @@
 using System;
 using Buildings.BuildingState.Income;
 using EventSystemComponents;
-using Popups.Buildings.Buy;
-using Popups.Buildings.Info.Events;
 using Storages;
 using Storages.Base;
+using UI.Popups.Buildings.Buy;
+using UI.Popups.Buildings.Info.Events;
 using UnityEngine;
 namespace Session
 {

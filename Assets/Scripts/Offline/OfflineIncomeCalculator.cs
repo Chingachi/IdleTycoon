@@ -4,6 +4,7 @@ using Common;
 using DI;
 using Storages;
 using Storages.Base;
+using UI.Popups.OfflineIncome;
 namespace Offline
 {
   public class OfflineIncomeCalculator
@@ -11,12 +12,15 @@ namespace Offline
     private readonly Storage<BuildingsSaveData> _buildingsStorage;
     private readonly Storage<ProfileSaveData> _sessionStorage;
     private readonly DiContainer _container;
+    private readonly OfflineIncomePopupManager _offlineIncomePopupManager;
 
-    public OfflineIncomeCalculator (Storage<BuildingsSaveData> buildingsStorage, Storage<ProfileSaveData> sessionStorage, DiContainer container)
+    public OfflineIncomeCalculator (
+      Storage<BuildingsSaveData> buildingsStorage, Storage<ProfileSaveData> sessionStorage, DiContainer container, OfflineIncomePopupManager popupManager)
     {
       _buildingsStorage = buildingsStorage;
       _sessionStorage = sessionStorage;
       _container = container;
+      _offlineIncomePopupManager = popupManager;
 
       _container.Unbind<OfflineIncomeCalculator>();
 
@@ -71,11 +75,7 @@ namespace Offline
         building.LastTimeDecayChanged = lastDecayEvent.Ticks;
       }
 
-      sessionData.Money += totalEarned;
-      sessionData.LastTimeUpdated = now.Ticks;
-
-      _sessionStorage.UpdateData(sessionData);
-      _buildingsStorage.UpdateData();
+      _offlineIncomePopupManager.OpenPopup(new OfflineIncomePopupData(totalEarned));
     }
   }
 }

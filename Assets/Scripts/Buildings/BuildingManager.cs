@@ -6,13 +6,13 @@ using Buildings.Dto;
 using DI;
 using DI.Contexts;
 using EventSystemComponents;
-using Popups.Buildings.Buy;
-using Popups.Buildings.Info.Manager;
-using Popups.Buildings.Info.Popup;
-using Popups.Buildings.Selection.Manager;
-using Popups.Buildings.Selection.Popup;
 using Storages;
 using Storages.Base;
+using UI.Popups.Buildings.Buy;
+using UI.Popups.Buildings.Info.Manager;
+using UI.Popups.Buildings.Info.Popup;
+using UI.Popups.Buildings.Selection.Manager;
+using UI.Popups.Buildings.Selection.Popup;
 using UnityEngine;
 namespace Buildings
 {
@@ -39,7 +39,6 @@ namespace Buildings
     {
       DiContainer container = ProjectContext.Container;
       container.Bind(this, BindType.Cached);
-      container.Bind(_buildingsDatabase, BindType.Cached);
 
       foreach (Placeholder placeholder in _placeholders) {
         placeholder.OnClick += go => SelectBuilding(placeholder);

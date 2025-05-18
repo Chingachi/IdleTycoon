@@ -1,7 +1,8 @@
 using DI;
-using Popups.Buildings.Buy.Manager;
-using Popups.Buildings.Info.Manager;
-using Popups.Buildings.Selection.Manager;
+using UI.Popups.Buildings.Buy.Manager;
+using UI.Popups.Buildings.Info.Manager;
+using UI.Popups.Buildings.Selection.Manager;
+using UI.Popups.OfflineIncome;
 namespace Installers
 {
   public class GameScenePopupsInstaller : BaseInstaller
@@ -12,6 +13,7 @@ namespace Installers
       Container.CreateAndBind<BuyBuildingPopupManager>(BindType.Transient);
       Container.CreateAndBind<SelectBuildingPopupManager>(BindType.Transient);
       Container.CreateAndBind<BuildingInfoPopupManager>(BindType.Transient);
+      Container.CreateAndBind<OfflineIncomePopupManager>(BindType.Transient);
     }
   }
 }
