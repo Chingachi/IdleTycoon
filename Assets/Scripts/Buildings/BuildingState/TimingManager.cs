@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Common;
-using Coroutines;
-using EventSystemComponents;
+using Core.Coroutines;
+using Core.EventSystemComponents;
 using Timers;
 using UnityEngine;
 namespace Buildings.BuildingState

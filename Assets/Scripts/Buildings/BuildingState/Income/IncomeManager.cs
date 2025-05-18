@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Coroutines;
-using EventSystemComponents;
-using Storages;
-using Storages.Base;
+using Core.Coroutines;
+using Core.EventSystemComponents;
+using Core.Storages;
+using Core.Storages.Base;
 using Timers;
 using UI.Popups.Buildings.Info.Events;
 namespace Buildings.BuildingState.Income

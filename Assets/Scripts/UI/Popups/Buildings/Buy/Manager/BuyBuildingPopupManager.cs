@@ -1,10 +1,10 @@
 using Buildings.Dto;
-using EventSystemComponents;
-using PopupSystem;
-using PopupSystem.Components;
+using Core.EventSystemComponents;
+using Core.PopupSystem;
+using Core.PopupSystem.Components;
+using Core.Storages;
+using Core.Storages.Base;
 using Session;
-using Storages;
-using Storages.Base;
 using UI.Popups.Buildings.Buy.Popup;
 namespace UI.Popups.Buildings.Buy.Manager
 {

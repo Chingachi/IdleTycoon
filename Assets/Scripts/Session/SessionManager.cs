@@ -1,8 +1,8 @@
 using System;
 using Buildings.BuildingState.Income;
-using EventSystemComponents;
-using Storages;
-using Storages.Base;
+using Core.EventSystemComponents;
+using Core.Storages;
+using Core.Storages.Base;
 using UI.Popups.Buildings.Buy;
 using UI.Popups.Buildings.Info.Events;
 using UnityEngine;

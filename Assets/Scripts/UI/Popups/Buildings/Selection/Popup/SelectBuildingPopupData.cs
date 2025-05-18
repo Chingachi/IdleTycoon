@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Buildings.Dto;
-using PopupSystem.Components;
+using Core.PopupSystem.Components;
 namespace UI.Popups.Buildings.Selection.Popup
 {
   public class SelectBuildingPopupData : IPopupData

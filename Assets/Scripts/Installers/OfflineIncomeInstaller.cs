@@ -1,4 +1,4 @@
-using DI;
+using Core.DI;
 using Offline;
 namespace Installers
 {

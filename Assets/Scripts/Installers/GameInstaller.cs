@@ -1,8 +1,8 @@
 using Buildings.BuildingState;
 using Buildings.BuildingState.Income;
-using DI;
-using Storages;
-using Storages.Base;
+using Core.DI;
+using Core.Storages;
+using Core.Storages.Base;
 using Timers;
 namespace Installers
 {

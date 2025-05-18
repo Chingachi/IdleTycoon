@@ -1,4 +1,4 @@
-using EventSystemComponents;
+using Core.EventSystemComponents;
 namespace Buildings.BuildingState.Income
 {
   public class IncomeEvent : BaseEvent

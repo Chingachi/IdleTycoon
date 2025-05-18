@@ -1,0 +1,32 @@
+﻿namespace Core.DI.Contexts
+{
+  public class ProjectContext : BaseContext
+  {
+
+    public static DiContainer Container
+    {
+      get
+      {
+        return Instance._container;
+      }
+    }
+    private static ProjectContext Instance
+    {
+      get;
+      set;
+    }
+
+    private void Awake()
+    {
+      if (Instance != null && Instance != this) {
+        Destroy(gameObject);
+
+        return;
+      }
+
+      Instance = this;
+      _container = new DiContainer();
+      BindInstallers();
+    }
+  }
+}

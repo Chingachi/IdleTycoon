@@ -1,11 +1,11 @@
-using Coroutines;
-using DI;
-using EventSystemComponents;
-using PopupSystem;
+using Core.Coroutines;
+using Core.DI;
+using Core.EventSystemComponents;
+using Core.PopupSystem;
+using Core.Storages;
+using Core.Storages.Base;
 using SceneManagement;
 using Session;
-using Storages;
-using Storages.Base;
 namespace Installers
 {
   public class MainInstaller : BaseInstaller

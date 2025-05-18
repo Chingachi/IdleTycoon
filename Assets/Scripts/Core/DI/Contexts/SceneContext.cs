@@ -1,0 +1,11 @@
+﻿namespace Core.DI.Contexts
+{
+  public class SceneContext : BaseContext
+  {
+    private void Awake()
+    {
+      _container = ProjectContext.Container;
+      BindInstallers();
+    }
+  }
+}

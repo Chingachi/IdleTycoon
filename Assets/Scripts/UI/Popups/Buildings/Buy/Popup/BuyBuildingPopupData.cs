@@ -1,6 +1,6 @@
 using System;
 using Buildings.Dto;
-using PopupSystem.Components;
+using Core.PopupSystem.Components;
 namespace UI.Popups.Buildings.Buy.Popup
 {
   public class BuyBuildingPopupData : IPopupData

@@ -1,6 +1,6 @@
 using System;
-using DI.Contexts;
-using PopupSystem;
+using Core.DI.Contexts;
+using Core.PopupSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 namespace Common

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Common;
-using Coroutines;
-using EventSystemComponents;
+using Core.Coroutines;
+using Core.EventSystemComponents;
 using UnityEngine;
 namespace Timers
 {

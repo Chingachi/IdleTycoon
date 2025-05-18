@@ -1,9 +1,9 @@
 using System;
 using Buildings;
 using Common;
-using DI;
-using Storages;
-using Storages.Base;
+using Core.DI;
+using Core.Storages;
+using Core.Storages.Base;
 using UI.Popups.OfflineIncome;
 namespace Offline
 {
@@ -11,7 +11,6 @@ namespace Offline
   {
     private readonly Storage<BuildingsSaveData> _buildingsStorage;
     private readonly Storage<ProfileSaveData> _sessionStorage;
-    private readonly DiContainer _container;
     private readonly OfflineIncomePopupManager _offlineIncomePopupManager;
 
     public OfflineIncomeCalculator (
@@ -19,10 +18,9 @@ namespace Offline
     {
       _buildingsStorage = buildingsStorage;
       _sessionStorage = sessionStorage;
-      _container = container;
       _offlineIncomePopupManager = popupManager;
 
-      _container.Unbind<OfflineIncomeCalculator>();
+      container.Unbind<OfflineIncomeCalculator>();
 
       CalculateIncomes();
     }

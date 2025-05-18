@@ -1,6 +1,6 @@
 using System;
 using Buildings;
-using PopupSystem.Components;
+using Core.PopupSystem.Components;
 namespace UI.Popups.Buildings.Info.Popup
 {
   public class BuildingInfoPopupData : IPopupData

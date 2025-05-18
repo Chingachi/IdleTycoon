@@ -1,4 +1,4 @@
-using EventSystemComponents;
+using Core.EventSystemComponents;
 namespace Session
 {
   public class BalanceChangeEvent : BaseEvent

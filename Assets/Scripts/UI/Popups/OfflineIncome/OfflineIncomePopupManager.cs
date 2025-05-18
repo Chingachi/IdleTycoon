@@ -1,8 +1,8 @@
 using Buildings.BuildingState.Income;
 using Common;
-using EventSystemComponents;
-using PopupSystem;
-using PopupSystem.Components;
+using Core.EventSystemComponents;
+using Core.PopupSystem;
+using Core.PopupSystem.Components;
 namespace UI.Popups.OfflineIncome
 {
   public class OfflineIncomePopupManager : BasePopupViewManager<OfflineIncomePopupData>

@@ -1,5 +1,5 @@
-using DI;
-using DI.Contexts;
+using Core.DI;
+using Core.DI.Contexts;
 using UnityEngine;
 namespace CameraComponents
 {

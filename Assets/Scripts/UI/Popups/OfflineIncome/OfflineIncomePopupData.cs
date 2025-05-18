@@ -1,5 +1,5 @@
 using System;
-using PopupSystem.Components;
+using Core.PopupSystem.Components;
 namespace UI.Popups.OfflineIncome
 {
   public class OfflineIncomePopupData : IPopupData

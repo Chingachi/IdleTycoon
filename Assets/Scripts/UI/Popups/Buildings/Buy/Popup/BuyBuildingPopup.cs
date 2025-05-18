@@ -1,6 +1,6 @@
 using System;
 using Buildings.Dto;
-using PopupSystem.Components;
+using Core.PopupSystem.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

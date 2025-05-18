@@ -1,4 +1,4 @@
-using EventSystemComponents;
+using Core.EventSystemComponents;
 namespace Common
 {
   public class PauseEvent : BaseEvent

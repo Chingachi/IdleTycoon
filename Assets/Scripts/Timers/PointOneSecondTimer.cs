@@ -1,5 +1,5 @@
-using Coroutines;
-using EventSystemComponents;
+using Core.Coroutines;
+using Core.EventSystemComponents;
 namespace Timers
 {
   public class PointOneSecondTimer : TickTimer

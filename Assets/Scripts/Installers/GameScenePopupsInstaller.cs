@@ -1,4 +1,4 @@
-using DI;
+using Core.DI;
 using UI.Popups.Buildings.Buy.Manager;
 using UI.Popups.Buildings.Info.Manager;
 using UI.Popups.Buildings.Selection.Manager;

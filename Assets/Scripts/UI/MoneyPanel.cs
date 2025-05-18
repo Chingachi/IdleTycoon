@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Globalization;
 using System.Text;
-using DI.Contexts;
-using EventSystemComponents;
-using Pool;
+using Core.DI.Contexts;
+using Core.EventSystemComponents;
+using Core.Pool;
+using Core.Storages;
+using Core.Storages.Base;
 using Session;
-using Storages;
-using Storages.Base;
 using TMPro;
 using UnityEngine;
 namespace UI
@@ -51,6 +51,7 @@ namespace UI
       sb.Append(eventData.Type == BalanceChangeEvent.BalanceChangeType.Income ? "+" : "-");
       sb.Append(eventData.ChangedAmount);
       animatedField.text = sb.ToString();
+
       animatedField.gameObject.SetActive(true);
 
       StartCoroutine(MoveAndFade(animatedField, eventData.Type == BalanceChangeEvent.BalanceChangeType.Income));

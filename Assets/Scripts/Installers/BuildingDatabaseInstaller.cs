@@ -1,5 +1,5 @@
 using Buildings.Dto;
-using DI;
+using Core.DI;
 using UnityEngine;
 namespace Installers
 {

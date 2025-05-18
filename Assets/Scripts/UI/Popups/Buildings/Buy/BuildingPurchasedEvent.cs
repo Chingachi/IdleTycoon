@@ -1,5 +1,5 @@
 using Buildings.Dto;
-using EventSystemComponents;
+using Core.EventSystemComponents;
 namespace UI.Popups.Buildings.Buy
 {
   public class BuildingPurchasedEvent : BaseEvent
