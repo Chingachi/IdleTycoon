@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Buildings.BuildingState;
 using Buildings.BuildingState.Income;
 using Buildings.Dto;
+using Buildings.PlaceholderComponents;
 using Core.DI;
 using Core.DI.Contexts;
 using Core.EventSystemComponents;

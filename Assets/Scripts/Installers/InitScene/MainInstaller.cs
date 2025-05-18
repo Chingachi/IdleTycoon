@@ -17,7 +17,8 @@ namespace Installers.InitScene
       Container.CreateAndBind<EventManager>(BindType.Singleton);
       Container.CreateAndBind<PopupManager>(BindType.Singleton);
 
-      Container.BindTo<Storage<ProfileSaveData>, FileStorage<ProfileSaveData>>();
+      Container.CreateAndBindTo<Storage<ProfileSaveData>, FileStorage<ProfileSaveData>>(BindType.Singleton);
+
       Container.CreateAndBind<SessionManager>(BindType.Singleton);
 
       Container.Bind<SceneLoaderPopupManager>();

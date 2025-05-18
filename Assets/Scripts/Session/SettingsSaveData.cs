@@ -6,6 +6,7 @@ namespace Session
   public class SettingsSaveData : ISaveData
   {
     public float MusicVolume = 1;
+    public bool PointersActiveState = true;
 
     public void Serialize()
     {}
