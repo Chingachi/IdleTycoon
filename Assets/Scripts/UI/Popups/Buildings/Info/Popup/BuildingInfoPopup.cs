@@ -62,9 +62,10 @@ namespace UI.Popups.Buildings.Info.Popup
       _durabilitySlider.value = data.CurrentDurability;
     }
 
-    public void SetUpgradeButtonStatus (bool status)
+    public void SetUpgradeButtonStatus (bool upgradeStatus, bool repairStatus)
     {
-      _upgradeButton.interactable = status;
+      _upgradeButton.interactable = upgradeStatus;
+      _repairButton.interactable = repairStatus;
     }
 
     private void HandleUpgradeButtonClick()

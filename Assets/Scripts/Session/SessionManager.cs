@@ -20,13 +20,16 @@ namespace Session
       _eventManager.SubscribeEvent<IncomeEvent>(HandleIncome);
       _eventManager.SubscribeEvent<BuildingPurchasedEvent>(HandleBuildingPurchase);
       _eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
+      _eventManager.SubscribeEvent<BuildingRepairEvent>(HandleBuildingRepair);
     }
+
 
     ~SessionManager()
     {
       _eventManager.UnsubscribeEvent<IncomeEvent>(HandleIncome);
       _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(HandleBuildingPurchase);
       _eventManager.UnsubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
+      _eventManager.UnsubscribeEvent<BuildingRepairEvent>(HandleBuildingRepair);
     }
 
 
@@ -46,6 +49,10 @@ namespace Session
       ChangeBalance((int)eventData.Price, BalanceChangeEvent.BalanceChangeType.Outcome);
     }
 
+    private void HandleBuildingRepair (BuildingRepairEvent eventData)
+    {
+      ChangeBalance((int)eventData.RepairCost, BalanceChangeEvent.BalanceChangeType.Outcome);
+    }
 
     private void ChangeBalance (int amount, BalanceChangeEvent.BalanceChangeType type)
     {

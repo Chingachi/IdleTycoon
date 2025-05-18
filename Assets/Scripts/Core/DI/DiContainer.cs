@@ -28,7 +28,13 @@ namespace Core.DI
               return;
             }
 
-            _transients.Add(type, instance.GetType());
+            if (instance is Type t) {
+              _transients.Add(type, t);
+
+              return;
+            }
+
+            _transients.Add(type, instance != null ? instance.GetType() : type);
           }
         },
         {
@@ -116,6 +122,28 @@ namespace Core.DI
       BindTo(instance, type, bindType);
     }
 
+    public void Bind<T>()
+      where T : class
+    {
+      Type type = typeof(T);
+      AddBinding(type, BindType.Transient);
+
+      if (_binders.TryGetValue(BindType.Transient, out Action<Type, object> binder)) {
+        binder(type, null);
+      }
+    }
+
+    public void BindTo<TReference, TInstance>()
+      where TInstance : class where TReference : class
+    {
+      Type reference = typeof(TReference);
+      AddBinding(reference, BindType.Transient);
+
+      if (_binders.TryGetValue(BindType.Transient, out Action<Type, object> binder)) {
+        binder.Invoke(reference, typeof(TInstance));
+      }
+    }
+
     public void CreateAndBind<T> (BindType bindType)
       where T : class
     {
@@ -124,7 +152,7 @@ namespace Core.DI
     }
 
     public void CreateAndBindTo<TReference, TInstance> (BindType bindType)
-      where TInstance : class, TReference where TReference : class
+      where TInstance : class where TReference : class
     {
       object instance = CreateInstance(typeof(TInstance));
       BindTo(instance, typeof(TReference), bindType);

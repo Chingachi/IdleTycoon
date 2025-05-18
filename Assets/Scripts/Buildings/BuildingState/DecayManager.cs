@@ -14,13 +14,13 @@ namespace Buildings.BuildingState
       : base(coroutineRunner, tickTimer, eventManager)
     {
       _storage = storage;
-      _eventManager.SubscribeEvent<RepairBuildingEvent>(HandleBuildingRepair);
+      _eventManager.SubscribeEvent<BuildingRepairEvent>(HandleBuildingRepair);
       _eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
     ~DecayManager()
     {
-      _eventManager.UnsubscribeEvent<RepairBuildingEvent>(HandleBuildingRepair);
+      _eventManager.UnsubscribeEvent<BuildingRepairEvent>(HandleBuildingRepair);
       _eventManager.UnsubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
@@ -47,9 +47,9 @@ namespace Buildings.BuildingState
       Restart();
     }
 
-    private void HandleBuildingRepair (RepairBuildingEvent eventData)
+    private void HandleBuildingRepair (BuildingRepairEvent eventData)
     {
-      _buildingTimings[eventData.buildingId] = Constants.DECAY_INTERVAL_IN_SECONDS;
+      _buildingTimings[eventData.BuildingId] = Constants.DECAY_INTERVAL_IN_SECONDS;
       _storage.UpdateData();
       Restart();
     }

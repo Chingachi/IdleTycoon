@@ -22,7 +22,7 @@ namespace UI.Popups.Buildings.Info.Manager
       _popup.OnRepair += HandleRepair;
       _popup.OnUpgrade += HandleUpgrade;
       _eventManager.SubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
-      _popup.SetUpgradeButtonStatus(_storage.Data.Money >= _data.BuildingData.GetCurrentUpgradePrice());
+      UpdateStatus(_storage.Data.Money);
     }
 
     protected override void HandleClose()
@@ -41,14 +41,24 @@ namespace UI.Popups.Buildings.Info.Manager
 
     private void HandleRepair()
     {
+      float repairCost = _data.BuildingData.GetRepairCost();
       _data.BuildingData.ResetDurability();
-      _eventManager.Fire(new RepairBuildingEvent(_data.BuildingData.Id));
+      _eventManager.Fire(new BuildingRepairEvent(_data.BuildingData.Id, repairCost));
       _popup.UpdateFields();
     }
 
     private void HandleBalanceChange (BalanceChangeEvent eventData)
     {
-      _popup.SetUpgradeButtonStatus(eventData.CurrentBalance >= _data.BuildingData.GetCurrentUpgradePrice());
+      UpdateStatus(eventData.CurrentBalance);
+    }
+
+    private void UpdateStatus (float money)
+    {
+
+      bool upgradeStatus = money >= _data.BuildingData.GetCurrentUpgradePrice();
+      bool repairStatus = money >= _data.BuildingData.GetRepairCost();
+
+      _popup.SetUpgradeButtonStatus(upgradeStatus, repairStatus);
     }
   }
 }

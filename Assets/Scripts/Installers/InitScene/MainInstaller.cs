@@ -16,10 +16,10 @@ namespace Installers.InitScene
       Container.CreateAndBind<EventManager>(BindType.Singleton);
       Container.CreateAndBind<PopupManager>(BindType.Singleton);
 
-      Container.CreateAndBindTo<Storage<ProfileSaveData>, FileStorage<ProfileSaveData>>(BindType.Transient);
+      Container.BindTo<Storage<ProfileSaveData>, FileStorage<ProfileSaveData>>();
       Container.CreateAndBind<SessionManager>(BindType.Singleton);
 
-      Container.CreateAndBind<SceneLoaderPopupManager>(BindType.Transient);
+      Container.Bind<SceneLoaderPopupManager>();
       Container.CreateAndBind<SceneController>(BindType.Singleton);
     }
   }

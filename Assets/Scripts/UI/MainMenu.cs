@@ -1,5 +1,6 @@
 using Core.DI.Contexts;
 using SceneManagement;
+using UI.Popups.Settings;
 using UnityEngine;
 using UnityEngine.UI;
 namespace UI
@@ -26,7 +27,9 @@ namespace UI
     }
 
     private void HandleSettingsClick()
-    {}
+    {
+      ProjectContext.Container.Resolve<SettingsPopupManager>().OpenPopup();
+    }
 
     private void HandleExitClick()
     {

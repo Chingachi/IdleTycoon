@@ -10,10 +10,10 @@ namespace Installers.GameScene
 
     public override void InstallBindings()
     {
-      Container.CreateAndBind<BuyBuildingPopupManager>(BindType.Transient);
-      Container.CreateAndBind<SelectBuildingPopupManager>(BindType.Transient);
-      Container.CreateAndBind<BuildingInfoPopupManager>(BindType.Transient);
-      Container.CreateAndBind<OfflineIncomePopupManager>(BindType.Transient);
+      Container.Bind<BuyBuildingPopupManager>();
+      Container.Bind<SelectBuildingPopupManager>();
+      Container.Bind<BuildingInfoPopupManager>();
+      Container.Bind<OfflineIncomePopupManager>();
     }
   }
 }

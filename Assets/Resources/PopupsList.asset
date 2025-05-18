@@ -22,4 +22,5 @@ MonoBehaviour:
     _popups:
     - {fileID: 2229705576035456570, guid: 074ab55f481dcd1478f747e71c67eb83, type: 3}
     - {fileID: -8015247276911784571, guid: b9de346ce29da3e42b0a789b18cc3d53, type: 3}
+    - {fileID: 5349618417703088404, guid: ad719bf956514dd4a9f64fe32725ce79, type: 3}
   PopupCanvas: {fileID: 7791702443607000527, guid: e54fc09adb685b5498b48e3a8f112060, type: 3}

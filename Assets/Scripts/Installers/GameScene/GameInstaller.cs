@@ -13,7 +13,6 @@ namespace Installers.GameScene
       Container.CreateAndBindTo<Storage<BuildingsSaveData>, FileStorage<BuildingsSaveData>>(BindType.Cached);
       Container.CreateAndBind<IncomeManager>(BindType.Cached);
       Container.CreateAndBind<DecayManager>(BindType.Cached);
-
     }
   }
 }
