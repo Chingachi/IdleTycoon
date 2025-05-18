@@ -5,7 +5,7 @@ namespace Common
 {
   public class ClickableGameObject : MonoBehaviour
   {
-    public event Action OnClick;
+    public event Action<GameObject> OnClick;
     private EventSystem _eventSystem;
 
     private void Start()
@@ -19,7 +19,7 @@ namespace Common
         return;
       }
 
-      OnClick?.Invoke();
+      OnClick?.Invoke(gameObject);
     }
   }
 }

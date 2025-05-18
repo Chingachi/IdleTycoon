@@ -42,6 +42,11 @@ namespace Buildings.BuildingState
         return;
       }
 
+      Restart();
+    }
+
+    protected virtual void Restart()
+    {
       _coroutineRunner.Stop(_coroutine);
 
       foreach (Building b in _buildings) {

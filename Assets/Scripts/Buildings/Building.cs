@@ -8,12 +8,12 @@ namespace Buildings
     public void SetData (BuildingData data)
     {
       Data = data;
-      _statusIndicator.UpdateStatus(0, data.CurrentDecay);
+      _statusIndicator.UpdateStatus(0, data.CurrentDurability);
     }
 
     public void UpdateIndicators()
     {
-      _statusIndicator.UpdateStatus(Data.IncomeWaitedSeconds / Data.GetCurrentIncomeTime(), Data.CurrentDecay);
+      _statusIndicator.UpdateStatus(Data.IncomeWaitedSeconds / Data.GetCurrentIncomeTime(), 1 - Data.CurrentDurability);
     }
 
     public void SetIndicator (StatusIndicator indicator)

@@ -41,7 +41,7 @@ namespace Popups.Buildings.Buy.Popup
       _preview.sprite = _data.BuildingDto.Preview;
       _nameField.text = _data.BuildingDto.Name;
       _descriptionField.text = _data.BuildingDto.Description;
-      _priceField.text = $"Price: {_data.BuildingDto.Price} $";
+      _priceField.text = $"Buy {_data.BuildingDto.Price} $";
       _incomeField.text = $"Income: {_data.BuildingDto.BaseIncome}";
       _incomePeriodField.text = $"Receive income every {_data.BuildingDto.BaseIncomePeriod} seconds";
       _decayFactorField.text = $"Decay: {_data.BuildingDto.BaseDecayCoefficient} per minute";

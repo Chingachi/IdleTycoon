@@ -25,7 +25,7 @@ namespace Offline
 
     public void CalculateIncomes()
     {
-      float decayInterval = Constants.DECAY_IN_SECONDS;
+      float decayInterval = Constants.DECAY_INTERVAL_IN_SECONDS;
 
       DateTime now = DateTime.UtcNow;
       ProfileSaveData sessionData = _sessionStorage.Data;
@@ -49,7 +49,7 @@ namespace Offline
 
         float decayPerTick = building.GetCurrentDecayCoefficient();
 
-        while (remainingTime >= Math.Min(nextIncomeTime, nextDecayTime) && building.CurrentDecay > 0f) {
+        while (remainingTime >= Math.Min(nextIncomeTime, nextDecayTime) && building.CurrentDurability > 0f) {
           if (nextIncomeTime <= nextDecayTime) {
 
             remainingTime -= nextIncomeTime;
@@ -60,7 +60,7 @@ namespace Offline
             nextIncomeTime = building.GetCurrentIncomeTime();
           } else {
             remainingTime -= nextDecayTime;
-            building.CurrentDecay = Math.Max(0f, building.CurrentDecay - decayPerTick);
+            building.CurrentDurability = Math.Max(0f, building.CurrentDurability - decayPerTick);
 
             nextIncomeTime -= nextDecayTime;
             nextDecayTime = decayInterval;

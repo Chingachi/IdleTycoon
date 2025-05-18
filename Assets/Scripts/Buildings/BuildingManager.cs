@@ -7,6 +7,8 @@ using DI;
 using DI.Contexts;
 using EventSystemComponents;
 using Popups.Buildings.Buy;
+using Popups.Buildings.Info.Manager;
+using Popups.Buildings.Info.Popup;
 using Popups.Buildings.Selection.Manager;
 using Popups.Buildings.Selection.Popup;
 using Storages;
@@ -31,12 +33,12 @@ namespace Buildings
     private EventManager _eventManager;
 
     private SelectBuildingPopupManager _selectBuildingPopupManager;
+    private BuildingInfoPopupManager _buildingInfoPopupManager;
 
     private void Awake()
     {
-
       foreach (Placeholder placeholder in _placeholders) {
-        placeholder.OnClick += () => SelectBuilding(placeholder);
+        placeholder.OnClick += go => SelectBuilding(placeholder);
       }
     }
 
@@ -73,6 +75,7 @@ namespace Buildings
       _eventManager = container.Resolve<EventManager>();
 
       _selectBuildingPopupManager = container.Resolve<SelectBuildingPopupManager>();
+      _buildingInfoPopupManager = container.Resolve<BuildingInfoPopupManager>();
     }
 
     private void SelectBuilding (Placeholder placeholder)
@@ -134,11 +137,18 @@ namespace Buildings
 
       Building building = Instantiate(data.Prefab);
       building.name = data.Name;
+      building.OnClick += HandleBuildingClick;
 
       StatusIndicator indicator = Instantiate(_statusIndicatorPrefab, building.transform);
       building.SetIndicator(indicator);
 
       return building;
+    }
+
+    private void HandleBuildingClick (GameObject go)
+    {
+      BuildingData data = go.GetComponent<Building>().Data;
+      _buildingInfoPopupManager.OpenPopup(new BuildingInfoPopupData(data));
     }
   }
 }

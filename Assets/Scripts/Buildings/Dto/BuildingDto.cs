@@ -14,6 +14,7 @@ namespace Buildings.Dto
     public int BaseIncome;
     public float BaseIncomePeriod;
     public float BaseDecayCoefficient;
+    public float RepairCoefficient;
     public Sprite Preview;
     public Building Prefab;
 
@@ -21,7 +22,8 @@ namespace Buildings.Dto
     {}
 
     public BuildingDto (
-      string name, BuildingType type, string description, int price, int baseUpgradePrice, int baseIncome, float baseIncomePeriod, float baseDecayCoefficient, Sprite preview, Building prefab)
+      string name, BuildingType type, string description, int price, int baseUpgradePrice, int baseIncome, float baseIncomePeriod, float baseDecayCoefficient,
+      float repairCoefficient, Sprite preview, Building prefab)
     {
       Name = name;
       Type = type;
@@ -31,6 +33,7 @@ namespace Buildings.Dto
       BaseIncome = baseIncome;
       BaseIncomePeriod = baseIncomePeriod;
       BaseDecayCoefficient = baseDecayCoefficient;
+      RepairCoefficient = repairCoefficient;
       Preview = preview;
       Prefab = prefab;
     }
@@ -45,6 +48,7 @@ namespace Buildings.Dto
       BaseIncome = source.BaseIncome;
       BaseIncomePeriod = source.BaseIncomePeriod;
       BaseDecayCoefficient = source.BaseDecayCoefficient;
+      RepairCoefficient = source.RepairCoefficient;
       Preview = source.Preview;
       Prefab = source.Prefab;
     }
