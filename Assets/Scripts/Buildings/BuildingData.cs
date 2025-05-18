@@ -72,24 +72,22 @@ namespace Buildings
         return 0;
       }
 
-      return BaseIncome * (1 + 0.5f * Level) * CurrentDurability;
+      return BaseIncome * (1 + 0.3f * Level) * CurrentDurability;
     }
 
     public float GetCurrentUpgradePrice()
     {
-      return BaseUpgradePrice * (Level + 1) * 1.75f;
+      return BaseUpgradePrice * (Level * (1 + 0.5f));
     }
 
     public float GetCurrentIncomeTime()
     {
-      return BaseIncomeTime * Mathf.Pow(0.98f, Level);
+      return BaseIncomeTime * Mathf.Pow(0.95f, Level);
     }
 
     public float GetCurrentDecayCoefficient()
     {
-      int level = Level / 2;
-
-      float result = BaseDecayCoefficient * Mathf.Pow(0.9f, level);
+      float result = BaseDecayCoefficient * Mathf.Pow(0.92f, Level);
       result /= 100f;
 
       return result;
@@ -109,7 +107,7 @@ namespace Buildings
 
     public float GetRepairCost()
     {
-      float baseRepair = BuyPrice * (1f + RepairCoefficient * Level);
+      float baseRepair = BuyPrice * (1 + RepairCoefficient * Level);
 
       return baseRepair * (1 - CurrentDurability);
     }

@@ -21,6 +21,6 @@ MonoBehaviour:
   BaseIncome: 25
   BaseIncomePeriod: 6
   BaseDecayCoefficient: 0.6
-  RepairCoefficient: 0.3
+  RepairCoefficient: 0.12
   Preview: {fileID: 21300000, guid: ca6342566a1747042a5b08ae68432d0b, type: 3}
   Prefab: {fileID: 4886220329510873486, guid: 5d4901dc0ac243545aae699af252555e, type: 3}

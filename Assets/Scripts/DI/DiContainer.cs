@@ -74,7 +74,7 @@ namespace DI
       T result = (T)_resolvers[bindType](type);
 
       if (result == null) {
-        throw new Exception($"Resolver for {type.Name} was not found");
+        Debug.LogError($"Resolver for {type.Name} was not found");
       }
 
       return result;
