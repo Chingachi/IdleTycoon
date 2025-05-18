@@ -9,9 +9,9 @@ namespace CameraComponents
     public float rotationSpeed = 200f;
 
     public float minY = 10f;
-    public float maxY = 35f;
+    public float maxY = 25f;
     public Vector2 panLimitX = new Vector2(140, 420f);
-    public Vector2 panLimitZ = new Vector2(120f, 180f);
+    public Vector2 panLimitZ = new Vector2(135f, 175f);
 
     private Vector3 _lastMousePosition;
 

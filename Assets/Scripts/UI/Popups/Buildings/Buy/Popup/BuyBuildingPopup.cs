@@ -1,4 +1,5 @@
 using System;
+using Buildings;
 using Buildings.Dto;
 using Core.PopupSystem.Components;
 using TMPro;
@@ -37,14 +38,15 @@ namespace UI.Popups.Buildings.Buy.Popup
     public override void SetData (IPopupData data)
     {
       _data = (BuyBuildingPopupData)data;
+      BuildingData buildingData = new BuildingData(_data.BuildingDto);
 
       _preview.sprite = _data.BuildingDto.Preview;
       _nameField.text = _data.BuildingDto.Name;
       _descriptionField.text = _data.BuildingDto.Description;
-      _priceField.text = $"Buy {_data.BuildingDto.Price:0.} $";
-      _incomeField.text = $"Income: {_data.BuildingDto.BaseIncome:0.#}";
-      _incomePeriodField.text = $"Receive income every {_data.BuildingDto.BaseIncomePeriod:0.#} seconds";
-      _decayFactorField.text = $"Decay: {_data.BuildingDto.BaseDecayCoefficient:0.#} per minute";
+      _priceField.text = $"Buy {_data.BuildingDto.Price:0.#} $";
+      _incomeField.text = $"Income: {buildingData.GetCurrentIncome():0.#}";
+      _incomePeriodField.text = $"Receive income every {buildingData.GetCurrentIncomeTime():0.#} seconds";
+      _decayFactorField.text = $"Decay: {buildingData.GetCurrentDecayCoefficient():0.#} per minute";
     }
 
     public void SetAvailableToBuy (float currentBalance)
