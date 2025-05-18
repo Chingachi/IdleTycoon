@@ -6,6 +6,7 @@ using Core.Storages;
 using Core.Storages.Base;
 using SceneManagement;
 using Session;
+using UI.Popups.SceneLoader;
 namespace Installers
 {
   public class MainInstaller : BaseInstaller
@@ -14,10 +15,13 @@ namespace Installers
     {
       Container.CreateAndBind<Awaiter>(BindType.Singleton);
       Container.CreateAndBind<EventManager>(BindType.Singleton);
-      Container.CreateAndBind<SceneController>(BindType.Singleton);
       Container.CreateAndBind<PopupManager>(BindType.Singleton);
+
       Container.CreateAndBindTo<Storage<ProfileSaveData>, FileStorage<ProfileSaveData>>(BindType.Transient);
       Container.CreateAndBind<SessionManager>(BindType.Singleton);
+
+      Container.CreateAndBind<SceneLoaderPopupManager>(BindType.Transient);
+      Container.CreateAndBind<SceneController>(BindType.Singleton);
     }
   }
 }

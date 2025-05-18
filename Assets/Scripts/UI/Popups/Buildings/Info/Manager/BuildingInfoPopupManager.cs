@@ -1,6 +1,5 @@
 using Core.EventSystemComponents;
 using Core.PopupSystem;
-using Core.PopupSystem.Components;
 using Core.Storages;
 using Core.Storages.Base;
 using Session;
@@ -8,11 +7,10 @@ using UI.Popups.Buildings.Info.Events;
 using UI.Popups.Buildings.Info.Popup;
 namespace UI.Popups.Buildings.Info.Manager
 {
-  public class BuildingInfoPopupManager : BasePopupViewManager<BuildingInfoPopupData>
+  public class BuildingInfoPopupManager : BasePopupViewManager<BuildingInfoPopupData, BuildingInfoPopup>
   {
 
     private readonly Storage<ProfileSaveData> _storage;
-    private BuildingInfoPopup _popup;
 
     public BuildingInfoPopupManager (PopupManager popupManager, EventManager eventManager, Storage<ProfileSaveData> storage)
       : base(popupManager, eventManager)
@@ -20,14 +18,17 @@ namespace UI.Popups.Buildings.Info.Manager
       _storage = storage;
     }
 
-    protected override void HandleLoadedPopup (BasePopup popup)
+    protected override void HandleLoadedPopup()
     {
-      _popup = (BuildingInfoPopup)popup;
-      _popup.OnClose += HandlePopupClose;
       _popup.OnRepair += HandleRepair;
       _popup.OnUpgrade += HandleUpgrade;
       _eventManager.SubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
       _popup.SetUpgradeButtonStatus(_storage.Data.Money >= _data.BuildingData.GetCurrentUpgradePrice());
+    }
+
+    protected override void HandleClose()
+    {
+      _eventManager.UnsubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
     }
 
     private void HandleUpgrade()
@@ -49,11 +50,6 @@ namespace UI.Popups.Buildings.Info.Manager
     private void HandleBalanceChange (BalanceChangeEvent eventData)
     {
       _popup.SetUpgradeButtonStatus(eventData.CurrentBalance >= _data.BuildingData.GetCurrentUpgradePrice());
-    }
-
-    private void HandlePopupClose()
-    {
-      _eventManager.UnsubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
     }
   }
 }

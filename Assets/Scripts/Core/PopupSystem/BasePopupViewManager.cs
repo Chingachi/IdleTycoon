@@ -2,13 +2,14 @@ using Core.EventSystemComponents;
 using Core.PopupSystem.Components;
 namespace Core.PopupSystem
 {
-  public abstract class BasePopupViewManager<TData>
-    where TData : IPopupData
+  public abstract class BasePopupViewManager<TData, TPopup>
+    where TData : IPopupData where TPopup : BasePopup
   {
     protected readonly PopupManager _popupManager;
     protected readonly EventManager _eventManager;
 
     protected TData _data;
+    protected TPopup _popup;
 
     protected BasePopupViewManager (PopupManager popupManager, EventManager eventManager)
     {
@@ -23,6 +24,21 @@ namespace Core.PopupSystem
       _popupManager.OpenPopup(data);
     }
 
-    protected abstract void HandleLoadedPopup (BasePopup popup);
+    public virtual void ClosePopup()
+    {
+      _popup.Close();
+    }
+
+    protected virtual void HandleLoadedPopup (BasePopup popup)
+    {
+      _popup = (TPopup)popup;
+      _popup.OnClose += HandleClose;
+      HandleLoadedPopup();
+    }
+
+    protected abstract void HandleLoadedPopup();
+
+    protected virtual void HandleClose()
+    {}
   }
 }

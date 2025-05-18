@@ -2,34 +2,30 @@ using Buildings.BuildingState.Income;
 using Common;
 using Core.EventSystemComponents;
 using Core.PopupSystem;
-using Core.PopupSystem.Components;
 namespace UI.Popups.OfflineIncome
 {
-  public class OfflineIncomePopupManager : BasePopupViewManager<OfflineIncomePopupData>
+  public class OfflineIncomePopupManager : BasePopupViewManager<OfflineIncomePopupData, OfflineIncomePopup>
   {
-    private OfflineIncomePopup _popup;
 
     public OfflineIncomePopupManager (PopupManager popupManager, EventManager eventManager)
       : base(popupManager, eventManager)
     {}
 
-    protected override void HandleLoadedPopup (BasePopup popup)
+    protected override void HandleLoadedPopup()
     {
-      _popup = (OfflineIncomePopup)popup;
-      _popup.OnClose += HandleClose;
       _popup.OkButtonClick += HandleOkButtonClick;
       _eventManager.Fire(new PauseEvent(true));
+    }
+
+    protected override void HandleClose()
+    {
+      _eventManager.Fire(new PauseEvent(false));
     }
 
     private void HandleOkButtonClick (float totalEarned)
     {
       _eventManager.Fire(new IncomeEvent(totalEarned));
       _popup.Close();
-    }
-
-    private void HandleClose()
-    {
-      _eventManager.Fire(new PauseEvent(false));
     }
   }
 }

@@ -2,7 +2,6 @@ using System.Linq;
 using Buildings.Dto;
 using Core.EventSystemComponents;
 using Core.PopupSystem;
-using Core.PopupSystem.Components;
 using Core.Storages;
 using Core.Storages.Base;
 using Session;
@@ -12,13 +11,11 @@ using UI.Popups.Buildings.Buy.Popup;
 using UI.Popups.Buildings.Selection.Popup;
 namespace UI.Popups.Buildings.Selection.Manager
 {
-  public class SelectBuildingPopupManager : BasePopupViewManager<SelectBuildingPopupData>
+  public class SelectBuildingPopupManager : BasePopupViewManager<SelectBuildingPopupData, SelectBuildingPopup>
   {
     private readonly BuyBuildingPopupManager _buyBuildingPopupManager;
     private readonly BuildingsSO _buildingsSo;
     private readonly Storage<ProfileSaveData> _storage;
-
-    private SelectBuildingPopup _popup;
 
     public SelectBuildingPopupManager (
       PopupManager popupManager, EventManager eventManager, BuyBuildingPopupManager buyBuildingPopupManager, BuildingsSO buildingsSo, Storage<ProfileSaveData> storage)
@@ -40,13 +37,17 @@ namespace UI.Popups.Buildings.Selection.Manager
       base.OpenPopup(newData);
     }
 
-    protected override void HandleLoadedPopup (BasePopup popup)
+    protected override void HandleLoadedPopup()
     {
-      _popup = (SelectBuildingPopup)popup;
       _popup.OnBuildingClick += HandleBuildingClick;
-      _popup.OnClose += HandlePopupClose;
       _eventManager.SubscribeEvent<BuildingPurchasedEvent>(HandlePurchaseSelectedBuilding);
       _eventManager.SubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
+    }
+
+    protected override void HandleClose()
+    {
+      _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(HandlePurchaseSelectedBuilding);
+      _eventManager.UnsubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
     }
 
     private void HandleBalanceChange (BalanceChangeEvent eventData)
@@ -57,12 +58,6 @@ namespace UI.Popups.Buildings.Selection.Manager
     private void HandlePurchaseSelectedBuilding (BuildingPurchasedEvent obj)
     {
       _popup.Close();
-    }
-
-    private void HandlePopupClose()
-    {
-      _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(HandlePurchaseSelectedBuilding);
-      _eventManager.UnsubscribeEvent<BalanceChangeEvent>(HandleBalanceChange);
     }
 
     private void HandleBuildingClick (BuildingDto dto)
