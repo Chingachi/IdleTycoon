@@ -3,6 +3,7 @@ using Buildings;
 using Common;
 using Core.DI;
 using Core.Storages;
+using SavingData;
 using UI.Popups.OfflineIncome;
 namespace Offline
 {
@@ -72,7 +73,9 @@ namespace Offline
         building.LastTimeDecayChanged = lastDecayEvent.Ticks;
       }
 
-      _offlineIncomePopupManager.OpenPopup(new OfflineIncomePopupData(totalEarned));
+      if (totalEarned > 0) {
+        _offlineIncomePopupManager.OpenPopup(new OfflineIncomePopupData(totalEarned));
+      }
     }
   }
 }
