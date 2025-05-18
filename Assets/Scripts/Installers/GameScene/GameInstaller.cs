@@ -2,9 +2,8 @@ using Buildings.BuildingState;
 using Buildings.BuildingState.Income;
 using Core.DI;
 using Core.Storages;
-using Core.Storages.Base;
 using Timers;
-namespace Installers
+namespace Installers.GameScene
 {
   public class GameInstaller : BaseInstaller
   {

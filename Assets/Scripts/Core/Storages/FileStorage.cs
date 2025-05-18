@@ -1,6 +1,6 @@
 using System.IO;
 using UnityEngine;
-namespace Core.Storages.Base
+namespace Core.Storages
 {
   public class FileStorage<T> : Storage<T>
     where T : ISaveData, new()

@@ -159,6 +159,11 @@ namespace Core.DI
       _binds.Remove(type);
     }
 
+    public bool HasBind (Type type)
+    {
+      return _binds.ContainsKey(type);
+    }
+
     private object CreateInstance (Type type)
     {
       ConstructorInfo [] constructors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);

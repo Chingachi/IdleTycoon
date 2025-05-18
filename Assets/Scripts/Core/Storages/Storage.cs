@@ -1,5 +1,5 @@
 using System;
-namespace Core.Storages.Base
+namespace Core.Storages
 {
   public abstract class Storage<T>
     where T : ISaveData, new()

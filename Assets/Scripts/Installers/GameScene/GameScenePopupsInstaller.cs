@@ -3,7 +3,7 @@ using UI.Popups.Buildings.Buy.Manager;
 using UI.Popups.Buildings.Info.Manager;
 using UI.Popups.Buildings.Selection.Manager;
 using UI.Popups.OfflineIncome;
-namespace Installers
+namespace Installers.GameScene
 {
   public class GameScenePopupsInstaller : BaseInstaller
   {

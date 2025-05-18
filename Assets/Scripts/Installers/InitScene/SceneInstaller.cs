@@ -1,7 +1,7 @@
 using Core.DI;
 using SceneManagement;
 using UnityEngine;
-namespace Installers
+namespace Installers.InitScene
 {
   public class SceneInstaller : BaseInstaller
   {

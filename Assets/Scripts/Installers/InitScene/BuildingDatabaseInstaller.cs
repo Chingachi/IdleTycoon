@@ -1,7 +1,7 @@
 using Buildings.Dto;
 using Core.DI;
 using UnityEngine;
-namespace Installers
+namespace Installers.InitScene
 {
   public class BuildingDatabaseInstaller : BaseInstaller
   {

@@ -1,4 +1,4 @@
-namespace Core.Storages.Base
+namespace Core.Storages
 {
   public class JsonWrapper
   {

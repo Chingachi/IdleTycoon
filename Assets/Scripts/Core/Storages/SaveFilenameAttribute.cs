@@ -1,5 +1,5 @@
 using System;
-namespace Core.Storages.Base
+namespace Core.Storages
 {
   [AttributeUsage(AttributeTargets.Class, Inherited = false)]
   public class SaveFilenameAttribute : Attribute

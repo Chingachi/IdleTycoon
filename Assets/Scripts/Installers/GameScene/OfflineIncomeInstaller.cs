@@ -1,6 +1,6 @@
 using Core.DI;
 using Offline;
-namespace Installers
+namespace Installers.GameScene
 {
   public class OfflineIncomeInstaller : BaseInstaller
   {

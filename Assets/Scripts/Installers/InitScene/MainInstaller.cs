@@ -3,11 +3,10 @@ using Core.DI;
 using Core.EventSystemComponents;
 using Core.PopupSystem;
 using Core.Storages;
-using Core.Storages.Base;
 using SceneManagement;
 using Session;
 using UI.Popups.SceneLoader;
-namespace Installers
+namespace Installers.InitScene
 {
   public class MainInstaller : BaseInstaller
   {

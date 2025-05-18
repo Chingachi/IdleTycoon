@@ -5,7 +5,6 @@ using Core.DI.Contexts;
 using Core.EventSystemComponents;
 using Core.Pool;
 using Core.Storages;
-using Core.Storages.Base;
 using Session;
 using TMPro;
 using UnityEngine;

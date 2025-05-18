@@ -1,4 +1,3 @@
-using Core.Storages.Base;
 namespace Core.Storages
 {
   [SaveFilename("ProfileData")]
