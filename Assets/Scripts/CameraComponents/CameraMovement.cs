@@ -4,11 +4,8 @@ namespace CameraComponents
   [RequireComponent(typeof(Camera))]
   public class CameraMovement : MonoBehaviour
   {
-    [Header("Zoom")]
     public float zoomSpeed = 400f;
-    [Header("Pan")]
     public float panSpeed = 0.2f;
-    [Header("Rotate")]
     public float rotationSpeed = 200f;
 
     public float minY = 10f;
@@ -50,14 +47,21 @@ namespace CameraComponents
       }
 
       Vector3 delta = Input.mousePosition - _lastMousePosition;
-      Vector3 move = new Vector3(-delta.x, 0f, -delta.y) * panSpeed;
-      transform.Translate(move, Space.World);
 
-      Vector3 clamp = transform.position;
-      clamp.x = Mathf.Clamp(clamp.x, panLimitX.x, panLimitX.y);
-      clamp.z = Mathf.Clamp(clamp.z, panLimitZ.x, panLimitZ.y);
-      transform.position = clamp;
+      Vector3 right = transform.right;
+      right.y = 0;
+      right.Normalize();
+      Vector3 forward = transform.forward;
+      forward.y = 0;
+      forward.Normalize();
 
+      Vector3 move = (-right * delta.x - forward * delta.y) * panSpeed;
+      Vector3 nextPos = transform.position + move;
+
+      nextPos.x = Mathf.Clamp(nextPos.x, panLimitX.x, panLimitX.y);
+      nextPos.z = Mathf.Clamp(nextPos.z, panLimitZ.x, panLimitZ.y);
+
+      transform.position = nextPos;
       _lastMousePosition = Input.mousePosition;
     }
 
@@ -67,8 +71,8 @@ namespace CameraComponents
         return;
       }
 
-      float horizontal = Input.GetAxis("Mouse X");
-      transform.Rotate(Vector3.up, horizontal * rotationSpeed * Time.deltaTime, Space.World);
+      float h = Input.GetAxis("Mouse X");
+      transform.Rotate(Vector3.up, h * rotationSpeed * Time.deltaTime, Space.World);
     }
   }
 }
