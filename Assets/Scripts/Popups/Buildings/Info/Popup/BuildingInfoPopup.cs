@@ -52,10 +52,10 @@ namespace Popups.Buildings.Info.Popup
       BuildingData data = _data.BuildingData;
       _houseNameField.text = data.Name;
       _levelField.text = $"Lvl. {data.CurrentLevel}";
-      _incomeField.text = $"Current income is {data.GetCurrentIncome()}$";
-      _incomePeriodField.text = $"Income period is every {data.GetCurrentIncomeTime()} seconds";
-      _durabilityField.text = $"{data.CurrentDurability * 100}/100";
-      _repairPriceField.text = $"{data.GetRepairCost()}$";
+      _incomeField.text = $"Current income is {data.GetCurrentIncome():0.##}$ -> {data.GetCurrentIncome(true):0.##}$";
+      _incomePeriodField.text = $"Income period is every {data.GetCurrentIncomeTime():0.#} -> {data.GetCurrentIncomeTime(true):0.#} seconds";
+      _durabilityField.text = $"{data.CurrentDurability * 100:0.}/100";
+      _repairPriceField.text = $"{data.GetRepairCost():0.}$";
       _upgradePriceField.text = $"{data.GetCurrentUpgradePrice()}$";
 
       _repairButton.gameObject.SetActive(data.CurrentDurability < 1);
@@ -64,7 +64,7 @@ namespace Popups.Buildings.Info.Popup
 
     public void SetUpgradeButtonStatus (bool status)
     {
-      _upgradeButton.enabled = status;
+      _upgradeButton.interactable = status;
     }
 
     private void HandleUpgradeButtonClick()

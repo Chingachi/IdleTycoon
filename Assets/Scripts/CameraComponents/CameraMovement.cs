@@ -6,14 +6,13 @@ namespace CameraComponents
   {
     [Header("Zoom")]
     public float zoomSpeed = 400f;
-
     [Header("Pan")]
     public float panSpeed = 0.2f;
-
     [Header("Rotate")]
     public float rotationSpeed = 200f;
+
     public float minY = 10f;
-    public float maxY = 80f;
+    public float maxY = 35f;
     public Vector2 panLimitX = new Vector2(140, 420f);
     public Vector2 panLimitZ = new Vector2(120f, 180f);
 

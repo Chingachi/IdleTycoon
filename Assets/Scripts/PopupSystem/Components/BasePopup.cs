@@ -1,5 +1,4 @@
 using System;
-using DI;
 using UnityEngine;
 using UnityEngine.UI;
 namespace PopupSystem.Components
@@ -11,7 +10,6 @@ namespace PopupSystem.Components
     [SerializeField]
     protected Button _closeButton;
 
-    protected DiContainer _container;
 
     protected virtual void Awake()
     {
@@ -22,15 +20,8 @@ namespace PopupSystem.Components
 
     public abstract void SetData (IPopupData data);
 
-    public void SetContainer(DiContainer container)
-    {
-      _container = container;
-    }
-
     public virtual void Show()
-    {
-      
-    }
+    {}
 
     public virtual void Close()
     {

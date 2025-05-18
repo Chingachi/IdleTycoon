@@ -2,6 +2,7 @@ using System;
 using Buildings.BuildingState.Income;
 using EventSystemComponents;
 using Popups.Buildings.Buy;
+using Popups.Buildings.Info.Events;
 using Storages;
 using Storages.Base;
 using UnityEngine;
@@ -19,12 +20,14 @@ namespace Session
       _storage = storage;
       _eventManager.SubscribeEvent<IncomeEvent>(HandleIncome);
       _eventManager.SubscribeEvent<BuildingPurchasedEvent>(HandleBuildingPurchase);
+      _eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
     ~SessionManager()
     {
       _eventManager.UnsubscribeEvent<IncomeEvent>(HandleIncome);
       _eventManager.UnsubscribeEvent<BuildingPurchasedEvent>(HandleBuildingPurchase);
+      _eventManager.UnsubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
 
@@ -39,6 +42,12 @@ namespace Session
       ChangeBalance((int)eventData.Money, BalanceChangeEvent.BalanceChangeType.Income);
     }
 
+    private void HandleBuildingUpgrade (BuildingUpgradeEvent eventData)
+    {
+      ChangeBalance((int)eventData.Price, BalanceChangeEvent.BalanceChangeType.Outcome);
+    }
+
+
     private void ChangeBalance (int amount, BalanceChangeEvent.BalanceChangeType type)
     {
       if (type == BalanceChangeEvent.BalanceChangeType.Income) {
@@ -49,7 +58,7 @@ namespace Session
 
       _storage.Data.LastTimeUpdated = DateTime.UtcNow.Ticks;
       _storage.UpdateData();
-      _eventManager.Fire(new BalanceChangeEvent(_storage.Data.Money, amount, BalanceChangeEvent.BalanceChangeType.Income));
+      _eventManager.Fire(new BalanceChangeEvent(_storage.Data.Money, amount, type));
     }
   }
 }

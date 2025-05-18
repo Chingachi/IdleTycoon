@@ -14,14 +14,26 @@ namespace Popups.Buildings.Selection.Popup
     [SerializeField]
     private SelectBuildingItem _selectionItemPrefab;
 
+    private SelectBuildingPopupData _data;
+
+    private readonly List<SelectBuildingItem> _items = new List<SelectBuildingItem>();
+
     public override void SetData (IPopupData data)
     {
-      List<BuildingDto> buildings = _container.Resolve<BuildingsSO>().GetAllBuildings();
+      _data = (SelectBuildingPopupData)data;
 
-      foreach (BuildingDto building in buildings) {
+      foreach (BuildingDto building in _data.Buildings) {
         SelectBuildingItem item = Instantiate(_selectionItemPrefab, _itemsContainer);
-        item.SetData(building);
+        item.SetData(building, _data.CurrentBalance);
         item.OnBuildingClick += HandleBuildingClick;
+        _items.Add(item);
+      }
+    }
+
+    public void UpdateAvailableToBuy (int currentBalance)
+    {
+      foreach (SelectBuildingItem item in _items) {
+        item.SetAvailable(currentBalance);
       }
     }
 

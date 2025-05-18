@@ -66,28 +66,28 @@ namespace Buildings
       RepairCoefficient = dto.RepairCoefficient;
     }
 
-    public float GetCurrentIncome()
+    public float GetCurrentIncome (bool showNext = false)
     {
       if (CurrentDurability < Constants.MINIMUM_INCOME_DURABILITY) {
         return 0;
       }
 
-      return BaseIncome * (1 + 0.3f * Level) * CurrentDurability;
+      return BaseIncome * (1 + 0.3f * GetLevel(showNext)) * CurrentDurability;
     }
 
     public float GetCurrentUpgradePrice()
     {
-      return BaseUpgradePrice * (Level * (1 + 0.5f));
+      return BaseUpgradePrice * (GetLevel() * (1 + 0.5f));
     }
 
-    public float GetCurrentIncomeTime()
+    public float GetCurrentIncomeTime (bool showNext = false)
     {
-      return BaseIncomeTime * Mathf.Pow(0.95f, Level);
+      return BaseIncomeTime * Mathf.Pow(0.95f, GetLevel(showNext));
     }
 
-    public float GetCurrentDecayCoefficient()
+    public float GetCurrentDecayCoefficient (bool showNext = false)
     {
-      float result = BaseDecayCoefficient * Mathf.Pow(0.92f, Level);
+      float result = BaseDecayCoefficient * Mathf.Pow(0.92f, GetLevel(showNext));
       result /= 100f;
 
       return result;
@@ -107,17 +107,16 @@ namespace Buildings
 
     public float GetRepairCost()
     {
-      float baseRepair = BuyPrice * (1 + RepairCoefficient * Level);
+      float baseRepair = BuyPrice * (1 + RepairCoefficient * GetLevel());
 
       return baseRepair * (1 - CurrentDurability);
     }
 
-    private int Level
+    private int GetLevel (bool showNext = false)
     {
-      get
-      {
-        return CurrentLevel == 0 ? 1 : CurrentLevel;
-      }
+      int result = CurrentLevel == 0 ? 1 : CurrentLevel;
+
+      return showNext ? result + 1 : result;
     }
   }
 }

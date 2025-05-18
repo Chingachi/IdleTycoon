@@ -18,11 +18,13 @@ namespace Buildings.BuildingState
       _storage = storage;
       _eventManager = eventManager;
       eventManager.SubscribeEvent<RepairBuildingEvent>(HandleBuildingRepair);
+      eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
     ~DecayManager()
     {
       _eventManager.UnsubscribeEvent<RepairBuildingEvent>(HandleBuildingRepair);
+      _eventManager.UnsubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
     protected override float GetTiming (Building building)
@@ -39,6 +41,13 @@ namespace Buildings.BuildingState
       }
 
       building.UpdateIndicators();
+    }
+
+    private void HandleBuildingUpgrade (BuildingUpgradeEvent eventData)
+    {
+      _buildingTimings[eventData.BuildingData.Id] = Constants.DECAY_INTERVAL_IN_SECONDS;
+      _storage.UpdateData();
+      Restart();
     }
 
     private void HandleBuildingRepair (RepairBuildingEvent eventData)

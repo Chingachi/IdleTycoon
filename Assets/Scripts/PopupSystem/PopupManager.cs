@@ -93,19 +93,28 @@ namespace PopupSystem
 
     private void ShowPopup (BasePopup instance, IPopupData data)
     {
-      var popupGo = Object.Instantiate(instance, _canvas);
+      BasePopup popupGo = Object.Instantiate(instance, _canvas);
       BasePopup popup = popupGo.GetComponent<BasePopup>();
 
-      popup.SetContainer(_container);
       popup.SetData(data);
 
       _visiblePopups.Add(popup);
+
       popup.OnClose += () =>
       {
         ClosePopup(data.GetPopupType());
       };
+
       data.Callback?.Invoke(popup);
       popup.Show();
+    }
+
+    public bool AnyPopupOpened
+    {
+      get
+      {
+        return _popupInstancesQueue.Count > 0 || _visiblePopups.Count > 0;
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Coroutines;
 using EventSystemComponents;
+using Popups.Buildings.Info.Events;
 using Storages;
 using Storages.Base;
 using Timers;
@@ -16,6 +17,12 @@ namespace Buildings.BuildingState.Income
     {
       _storage = storage;
       _eventManager = eventManager;
+      _eventManager.SubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
+    }
+
+    ~IncomeManager()
+    {
+      _eventManager.UnsubscribeEvent<BuildingUpgradeEvent>(HandleBuildingUpgrade);
     }
 
     protected override void HandleTenthOfSecondTick()
@@ -39,6 +46,13 @@ namespace Buildings.BuildingState.Income
       building.Data.IncomeWaitedSeconds = 0;
       building.UpdateIndicators();
       SaveData();
+    }
+
+    private void HandleBuildingUpgrade (BuildingUpgradeEvent eventData)
+    {
+      _buildingTimings[eventData.BuildingData.Id] = eventData.BuildingData.GetCurrentIncomeTime();
+      _storage.UpdateData();
+      Restart();
     }
 
     private void SaveData()

@@ -34,6 +34,19 @@ namespace Buildings.BuildingState
       _coroutine = _coroutineRunner.Run(WaitAndCountIncome());
     }
 
+    public void Stop()
+    {
+      _coroutineRunner.Stop(_coroutine);
+
+      foreach (Building b in _buildings) {
+        if (_buildingTimings.ContainsKey(b.Id)) {
+          _buildingTimings[b.Id] -= waitedTime;
+        }
+      }
+
+      waitedTime = 0;
+    }
+
     public virtual void RegisterBuilding (Building building)
     {
       _buildings.Add(building);
@@ -47,15 +60,7 @@ namespace Buildings.BuildingState
 
     protected virtual void Restart()
     {
-      _coroutineRunner.Stop(_coroutine);
-
-      foreach (Building b in _buildings) {
-        if (_buildingTimings.ContainsKey(b.Id)) {
-          _buildingTimings[b.Id] -= waitedTime;
-        }
-      }
-
-      waitedTime = 0;
+      Stop();
       _coroutine = _coroutineRunner.Run(WaitAndCountIncome());
     }
 

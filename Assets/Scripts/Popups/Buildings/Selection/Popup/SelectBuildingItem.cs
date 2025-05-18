@@ -23,11 +23,18 @@ namespace Popups.Buildings.Selection.Popup
       _itemButton.onClick.AddListener(OnItemClick);
     }
 
-    public void SetData (BuildingDto data)
+    public void SetData (BuildingDto data, int currentBalance)
     {
       _data = data;
       _preview.sprite = data.Preview;
       _priceField.text = $"${data.Price}";
+      SetAvailable(currentBalance);
+    }
+
+    public void SetAvailable (int currentBalance)
+    {
+      bool availableToPurchase = _data.Price <= currentBalance;
+      _priceField.color = availableToPurchase ? Color.yellow : Color.red;
     }
 
     private void OnItemClick()

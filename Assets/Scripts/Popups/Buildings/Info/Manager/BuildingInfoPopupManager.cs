@@ -31,7 +31,13 @@ namespace Popups.Buildings.Info.Manager
     }
 
     private void HandleUpgrade()
-    {}
+    {
+      float price = _data.BuildingData.GetCurrentUpgradePrice();
+      _data.BuildingData.CurrentLevel++;
+      _data.BuildingData.ResetDurability();
+      _eventManager.Fire(new BuildingUpgradeEvent(_data.BuildingData, price));
+      _popup.UpdateFields();
+    }
 
     private void HandleRepair()
     {

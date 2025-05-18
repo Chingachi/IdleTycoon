@@ -37,6 +37,10 @@ namespace Buildings
 
     private void Awake()
     {
+      DiContainer container = ProjectContext.Container;
+      container.Bind(this, BindType.Cached);
+      container.Bind(_buildingsDatabase, BindType.Cached);
+
       foreach (Placeholder placeholder in _placeholders) {
         placeholder.OnClick += go => SelectBuilding(placeholder);
       }
@@ -66,8 +70,6 @@ namespace Buildings
     private void InitBindings()
     {
       DiContainer container = ProjectContext.Container;
-      container.Bind(this, BindType.Cached);
-      container.Bind(_buildingsDatabase, BindType.Cached);
 
       _incomeManager = container.Resolve<IncomeManager>();
       _storage = container.Resolve<Storage<BuildingsSaveData>>();
